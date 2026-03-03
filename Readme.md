@@ -10,8 +10,8 @@
 </p>
 
 ```console
-## Yazar: faruk-guler 2026
-## Page: www.farukguler.com
+# Yazar: faruk-guler 2026
+# Page: www.farukguler.com
 ```
 
 ---
