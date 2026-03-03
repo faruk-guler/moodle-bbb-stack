@@ -1,0 +1,111 @@
+# 15 - Moodle 5.x Yenilikleri ve Gelecek Vizyonu (2026)
+
+Eğitim dünyası değişiyor, Moodle da bu değişime sürüklenerek değil **liderlik ederek** ayak uyduruyor. 2026 ve ötesinde bizi neler bekliyor?
+
+## 15.1 Moodle 5.x Serisi — Sürüm Tablosu
+
+| Sürüm | Yayın Tarihi | Öne Çıkan Özellik |
+| :--- | :--- | :--- |
+| Moodle 4.5 (LTS) | Nov 2024 | PHP 8.3+ zorunlu, tam AI entegrasyonu, yeni Editor |
+| Moodle 5.0 | Nis 2025 | **`/public` dizin mimarisi**, Oracle desteği kaldırıldı |
+| **Moodle 5.1 (Güncel)** | **Kas 2025** | **PHP 8.2-8.4 dest. (8.3 önerilir)**, MySQL 8.4 min., PostgreSQL 16 min. |
+| Moodle 5.2 | Nis 2026 | Planlanan: H5P iyileştirmeleri, performans güncellemeleri |
+| **Moodle 5.3 (LTS)** | **Eki 2026** | **Planlanan LTS sürümü — kurumsal geçiş için hazırlanın** |
+
+## 15.2 Yapay Zeka (AI) Entegrasyonu
+
+Moodle 4.4 ile birlikte çekirdek seviyesinde AI altyapısı devreye girdi.
+
+```
+Site Administration > AI > AI providers
+```
+
+```php
+// config.php — AI provider bağlantısı (isteğe bağlı)
+// OpenAI veya Azure AI ayarları admin panelinden da yapılabilir
+```
+
+**Kullanım Senaryoları:**
+- **Eğitmenler için:** Kurs içeriği taslağı oluşturma, soru üretimi
+- **Öğrenciler için:** Ödev özeti, kavram açıklaması
+- **Yöneticiler için:** Rapor yorumlama yardımı
+
+> [!NOTE]
+> AI özelliklerini açmak isteğe bağlıdır. Veri gizliliği politikanıza göre OpenAI gibi harici servislere veri gönderildiğini kullanıcılara bildirmeniz yasal açıdan önemlidir.
+
+## 15.3 Modern PHP ve Performans Artışı
+
+```bash
+# Moodle 4.5+ için PHP 8.3 zorunludur
+php8.3 -v
+
+# PHP 8.3 JIT Compiler (Just-In-Time) aktif etme
+# php.ini
+opcache.jit = 1255
+opcache.jit_buffer_size = 64M
+```
+
+PHP 8.3 JIT ile birlikte CPU-yoğun Moodle işlemleri (Analytics modelleri, büyük raporlar) %20-40 daha hızlı çalışabilmektedir.
+
+## 15.4 Moodle LMS — Docker ile Kurulum (Geliştirme/Test Ortamı)
+
+> [!WARNING]
+> Aşağıdaki Docker Compose sadece geliştirme ve test ortamları içindir. **Canlı (production) Moodle kurulumu için önerilmez.**
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+  moodle:
+    image: bitnami/moodle:5
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - MOODLE_DATABASE_TYPE=pgsql
+      - MOODLE_DATABASE_HOST=moodle-db
+      - MOODLE_DATABASE_NAME=moodledb
+      - MOODLE_DATABASE_USER=moodleuser
+      - MOODLE_DATABASE_PASSWORD=sifre123
+      - MOODLE_USERNAME=admin
+      - MOODLE_PASSWORD=Admin1234!
+      - MOODLE_EMAIL=admin@example.com
+      - MOODLE_SITE_NAME=Test Moodle
+    volumes:
+      - moodle_data:/bitnami/moodle
+      - moodle_data_dir:/bitnami/moodledata
+    depends_on:
+      - moodle-db
+
+  moodle-db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=moodledb
+      - POSTGRES_USER=moodleuser
+      - POSTGRES_PASSWORD=sifre123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  moodle_data:
+  moodle_data_dir:
+  postgres_data:
+```
+
+```bash
+docker compose up -d
+# Moodle'a http://localhost:8080 adresinden erişin
+```
+
+## 15.5 Moodle Roadmap — 2026 ve Ötesi
+
+- **Stateless Moodle:** Kubernetes üzerinde yatay ölçeklenen Moodle küme mimarileri standart hale geliyor.
+- **Micro-learning:** Daha kısa, odaklı öğrenme modülleri için optimizasyon.
+- **SCORM 3.0 (xAPI/cmi5):** Yeni nesil SCORM standardına geçiş.
+- **Moodle Workplace:** Kurumsal eğitim ve sertifikasyon yönetimi özellikleri Core'a taşınıyor.
+
+---
+
+> [!TIP]
+> **Son Söz:** Moodle bir yazılım değil, yaşayan bir organizmadır. Onu güncel, güvenli ve performanslı tutmak sadece kodla değil, iyi bir sistem yönetimi vizyonuyla mümkündür. 2026 rehberinin sonuna geldik. İyi şanslar!

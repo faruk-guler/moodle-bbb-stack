@@ -1,0 +1,92 @@
+# 13 - BigBlueButton (BBB) Moodle Entegrasyonu
+
+Moodle ve BigBlueButton arasındaki bağ, modern bir uzaktan eğitim sisteminin en kritik köprüsüdür. Bu bölüm, yalnızca Moodle tarafındaki yapılandırmayı ele alır; BBB kurulumu için bu repodaki `BigBlueButton` dizinini inceleyin.
+
+## 13.1 BBB Eklentisinin Kurulumu
+
+Moodle 4.1+ ve 5.x sürümlerinde `mod_bigbluebuttonbn` eklentisi artık **Moodle çekirdeğine dahildir** — ayrıca kurmanıza gerek yoktur. Kontrol etmek için:
+
+```
+Site Administration > Plugins > Activity Modules > BigBlueButton
+```
+
+Eğer yoksa veya eski bir sürüm ise:
+
+```bash
+cd /var/www/moodle/public/mod
+sudo git clone https://github.com/blindsidenetworks/moodle-mod_bigbluebuttonbn.git bigbluebuttonbn
+sudo chown -R root:www-data /var/www/moodle/public/mod/bigbluebuttonbn
+sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/upgrade.php --non-interactive
+```
+
+## 13.2 API Konfigürasyonu
+
+BBB sunucunuzun API adresini ve gizli anahtarını (Secret) aşağıya girin:
+
+```
+Site Administration > Plugins > Activity Modules > BigBlueButton (mod_bigbluebuttonbn)
+```
+
+| Alan | Değer | Komut (BBB Sunucusunda) |
+| :--- | :--- | :--- |
+| BBB API Endpoint | `https://bbb.sirket.com/bigbluebutton/` | `bbb-conf --secret` |
+| BBB Secret | `xyz123abc...` | `bbb-conf --secret` |
+
+> [!IMPORTANT]
+> BBB API Endpoint URL'si mutlaka `/bigbluebutton/` ile **bitmelidir** (sondaki `/` dahil). Eksik olursa tüm API çağrıları başarısız olur.
+
+## 13.3 API Bağlantısını Test Etme
+
+Moodle admin panelinde "Test" butonu yerine CLI ile doğrulama yapın:
+
+```bash
+# Checksum hesaplama ve API test (BBB sunucusunda)
+SECRET="bbb_secret_key"
+CALL="getMeetings"
+CHECKSUM=$(echo -n "${CALL}${SECRET}" | sha256sum | awk '{print $1}')
+curl -s "https://bbb.sirket.com/bigbluebutton/api/getMeetings?checksum=${CHECKSUM}"
+# Yanıtta <returncode>SUCCESS</returncode> görmelisiniz
+```
+
+## 13.4 Kayıt (Recording) Yönetimi
+
+BBB üzerinde yapılan kayıtların Moodle dersleri içinde görünmesi için:
+
+1. BBB sunucusunda kayıtların tamamlanmış ve `published` (yayımlanmış) durumda olması gerekir.
+2. Moodle Cron'u çalışıyor olmalıdır — Cron her çalıştığında BBB API'sini sorgular.
+3. Kayıt listesi Moodle'da hemen görünmüyorsa: `sudo -u www-data php8.3 public/admin/cli/cron.php`
+
+```bash
+# BBB'de kayıt durumlarını kontrol et
+SECRET="bbb_secret_key"
+CALL="getRecordings"
+CHECKSUM=$(echo -n "${CALL}${SECRET}" | sha256sum | awk '{print $1}')
+curl -s "https://bbb.sirket.com/bigbluebutton/api/getRecordings?checksum=${CHECKSUM}" | grep -o '<state>[^<]*</state>'
+```
+
+## 13.5 Kullanıcı Rolleri ve Eşleşme
+
+| Moodle Rolü | BBB Rolü | İzinler |
+| :--- | :--- | :--- |
+| Teacher / Editingteacher | Moderator | Toplantıyı başlatır, katılımcıları yönetir |
+| Student | Viewer | Sadece katılım |
+| Siteadmin | Moderator | Her toplantıya moderatör olarak girer |
+
+Bu eşleştirme `Site Administration > Plugins > Activity modules > BigBlueButton > Manage roles` altından özelleştirilebilir.
+
+## 13.6 Webhooks ile Kayıt Bildirim Optimizasyonu
+
+Moodle varsayılan olarak her Cron çalıştığında BBB API'sini sorgular. Binlerce toplantı için bu verimsizdir.
+
+```bash
+# BBB Sunucusunda Webhook kurulumu (BBB sunucusunda çalıştırın)
+SECRET="bbb_secret_key"
+MOODLE_URL="https://moodle.sirket.com/mod/bigbluebuttonbn/bbb_broker.php"
+CHECKSUM=$(echo -n "hooks/create${MOODLE_URL}${SECRET}" | sha256sum | awk '{print $1}')
+curl "https://bbb.sirket.com/bigbluebutton/api/hooks/create?callbackURL=${MOODLE_URL}&checksum=${CHECKSUM}"
+```
+
+---
+
+> [!TIP]
+> `Test connection` butonu yeşil yanmıyorsa önce kontrol edilecekler sırasıyla: SSL sertifika geçerliliği → DNS çözünürlüğü → Port 443 erişimi → `SECRET` değerinin doğruluğu. Moodle güvensiz (self-signed SSL) BBB bağlantısına izin vermez.
