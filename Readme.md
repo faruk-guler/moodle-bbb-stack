@@ -11,6 +11,7 @@
 
 ```console
 ## Yazar: faruk-guler 2026
+## Page: www.farukguler.com
 ```
 
 ---
