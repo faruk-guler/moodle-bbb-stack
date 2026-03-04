@@ -1,0 +1,22 @@
+1: (self-signed) bir sertifika oluşturmak için:
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+   -keyout moodle.key \
+   -out moodle.crt \
+   -config csr.conf
+
+-----------
+moodle.key   → private key
+moodle.crt   → SSL certificate
+-----------
+
+2: Nginx için Diffie-Hellman (DH) Parametresini Unutmayın:
+openssl dhparam -out /etc/nginx/ssl/dhp-4096.pem 2048
+
+3: Sertifikayı Cliente ve Servere Tanıtın:
+
+Server:
+cp /etc/nginx/ssl/bbb.guler.com.crt /usr/local/share/ca-certificates/bbb.guler.com.crt
+update-ca-certificates
+
+Client: Manual
