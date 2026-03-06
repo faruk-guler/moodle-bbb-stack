@@ -114,13 +114,13 @@ cat /var/www/moodle/public/version.php | grep "\$release"
 
 ```bash
 # 1. Git ile eski commit'e geri dön
-cd /var/www/moodle/public
+cd /var/www/moodle
 sudo git log --oneline -5                     # Eski commit hash'ini bul
 sudo git checkout <eski_commit_hash>
 
 # 2. Veritabanını yedekten geri yükle
 sudo -u www-data php8.3 public/admin/cli/maintenance.php --enable
-PGPASSWORD="sifre" psql -U moodleuser moodledb < /backup/moodle/2026-03-01_02-00/moodle-db.sql.gz
+gunzip -c /backup/moodle/2026-03-01_02-00/moodle-db.sql.gz | PGPASSWORD="sifre" psql -U moodleuser moodledb
 
 # 3. moodledata'yı yedekten geri yükle (gerekirse)
 sudo -u www-data php8.3 public/admin/cli/maintenance.php --disable

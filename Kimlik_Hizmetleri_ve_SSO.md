@@ -31,30 +31,19 @@ Moodle yerleşik bir LDAP eklentisi ile gelir.
    * `Email address` → `mail`
    * **Update local:** On Every Login (Her girişte AD'den bilgiyi çekip Moodle'ı günceller).
 
-### 1.2 Greenlight (BBB) LDAP Yapılandırması
+### 1.2 Greenlight v3 ve LDAP (ÖNEMLİ MİMARİ DEĞİŞİKLİĞİ)
 
-Greenlight (v3) ortam dosyasında (`.env`) LDAP parametreleri doldurulmalıdır.
+Greenlight v2 sürümünde doğrudan `.env` dosyasına LDAP parametreleri (`LDAP_SERVER`, `LDAP_UID` vb.) girilerek Active Directory bağlantısı yapılabiliyordu. Ancak **Greenlight v3 ile birlikte doğrudan LDAP desteği kaldırılmıştır**.
 
-```bash
-cd ~/greenlight-v3
-sudo nano .env
-```
+Bunun yerine, endüstri standardı olan **OpenID Connect (OIDC)** kullanımına geçilmiştir. Greenlight v3 ortamında kullanıcılarınızı LDAP üzerinden doğrulamak için araya bir **Kimlik Sağlayıcı (IdP - Örn: Keycloak)** kurmanız zorunludur.
 
-```env
-# Varsayılan kimlik doğrulama yöntemini değiştirin
-AUTH_METHOD=ldap
+**Yeni Mimari Akışı:**
+1. Kullanıcı Greenlight v3'e girer ve "Giriş Yap" butonuna basar.
+2. Greenlight, kullanıcıyı Keycloak (IdP) sunucusuna yönlendirir.
+3. Keycloak, arka planda (User Federation özelliği ile) Active Directory (LDAP) sunucunuzla konuşarak kullanıcının bilgilerini doğrular.
+4. Keycloak onayladığı kullanıcıyı bir OIDC bileti (Token) ile Greenlight'a geri gönderir.
 
-# LDAP Ayarları
-LDAP_SERVER=dc01.sirket.local
-LDAP_PORT=389  # Veya SSL için 636
-LDAP_METHOD=tls # Veya ssl/plain
-LDAP_UID=sAMAccountName
-LDAP_BASE=DC=sirket,DC=local
-LDAP_BIND_DN=CN=MoodleRead,OU=ServiceAccounts,DC=sirket,DC=local
-LDAP_PASSWORD=servis_sifresi
-```
-
-Değişiklikleri uygulayın: `docker compose down && docker compose up -d`. Artık kullanıcılarınız şirket şifreleriyle toplantı odası açabilir.
+Bu kurulumun detayları, BBB dokümantasyonundaki ilgili "Greenlight v3 İleri Düzey Yönetim" bölümünde anlatılmıştır. Moodle kullanıyorsanız Greenlight'a ihtiyacınız yoktur; Moodle zaten doğrudan LDAP destekler.
 
 ---
 

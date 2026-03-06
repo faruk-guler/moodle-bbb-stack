@@ -106,11 +106,13 @@ docker compose up -d
 Promtail, log dosyalarını okuyup Loki'ye gönderen hafif bir ajandır. Hem Moodle hem BBB sunucusuna kurulur.
 
 ```bash
-# Promtail binary indir
-sudo wget -O /usr/local/bin/promtail.gz \
-  "https://github.com/grafana/loki/releases/latest/download/promtail-linux-amd64.zip"
-sudo gunzip /usr/local/bin/promtail.gz
-sudo chmod +x /usr/local/bin/promtail
+# Promtail binary indir (Linux amd64)
+PROMTAIL_VERSION=$(curl -s https://api.github.com/repos/grafana/loki/releases/latest | grep tag_name | cut -d '"' -f 4)
+sudo wget -O /tmp/promtail.zip \
+  "https://github.com/grafana/loki/releases/download/${PROMTAIL_VERSION}/promtail-linux-amd64.zip"
+sudo unzip /tmp/promtail.zip -d /usr/local/bin/
+sudo chmod +x /usr/local/bin/promtail-linux-amd64
+sudo ln -sf /usr/local/bin/promtail-linux-amd64 /usr/local/bin/promtail
 ```
 
 **Moodle Sunucusu için Promtail yapılandırması:**

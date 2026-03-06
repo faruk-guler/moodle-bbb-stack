@@ -9,7 +9,7 @@
 ## Moodle Nedir?
 Moodle, dünyanın en popüler, açık kaynaklı öğrenme yönetim sistemidir (LMS). PHP tabanlı yapısı, esnek eklenti desteği ve devasa komünitesi ile her seviyeden eğitim kurumuna hitap eder. Sadece içerik sunmakla kalmaz; sınavlar, ödevler, işbirlikçi çalışmalar ve analitik raporlamalar için kapsamlı bir ekosistem sağlar.
 
-Bu proje, **Moodle** için sistem yöneticilerine, devops mühendislerine ve sunucu yöneticilerine yönelik hazırlanan, baştan uca ve eksiksiz bir Türkçe dokümantasyon setidir. Dokümantasyon, Moodle'nın **5.1.3** (Mart 2026 itibarıyla yayımlanmış) kararsız (stable) sürümü odaklı hazırlanmış, geriye dönük uyumluluk notlarıyla 4.5 LTS'e de değinmektedir.
+Bu proje, **Moodle** için sistem yöneticilerine, devops mühendislerine ve sunucu yöneticilerine yönelik hazırlanan, baştan uca ve eksiksiz bir Türkçe dokümantasyon setidir. Dokümantasyon, Moodle'nın **5.1.3** (Mart 2026 itibarıyla yayımlanmış) kararlı (stable) sürümü odaklı hazırlanmış, geriye dönük uyumluluk notlarıyla 4.5 LTS'e de değinmektedir.
 
 > Moodle 5.0 ile kritik bir mimari değişiklik geldi: Web sunucusu artık `/public` alt dizinini root olarak kullanmaktadır.
 
@@ -27,7 +27,7 @@ Bu rehber, Moodle'ın sadece kurulumunu değil, gerçek dünya senaryolarında n
 * **08. Tema ve Özelleştirme:** CSS/SCSS ve dil paketleri üzerinde sistemci dokunuşları.
 * **09. Eklenti ve LTI:** Harici araçların güvenli entegrasyonu.
 * **10. Performans ve Ölçeklendirme:** Load Balancing ve Sticky Sessions mimarisi.
-* **11. Mobil Uygulama:** push bildirimleri ve Firebase ayarları.
+* **11. Mobil Uygulama:** Push bildirimleri ve Firebase ayarları.
 * **12. Analitik ve Raporlama:** Veriden anlam çıkarma; Learning Analytics.
 * **13. BigBlueButton Entegrasyonu:** Moodle ve BBB'nin mükemmel uyumu.
 * **14. Sorun Giderme (Troubleshooting):** Beyaz ekranlar, debug modları ve log analizi.

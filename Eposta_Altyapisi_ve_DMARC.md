@@ -34,9 +34,9 @@ sudo nano .env
 ```
 
 ```env
-# E-posta uyarılarını aktif et
-ALLOW_MAIL_NOTIFICATIONS=true
-
+# Greenlight v3 SMTP Yapılandırması (Resmi sample.env formatı)
+SMTP_SENDER_EMAIL=no-reply@sirket.com
+SMTP_SENDER_NAME=BigBlueButton
 SMTP_SERVER=smtp.office365.com
 SMTP_PORT=587
 SMTP_DOMAIN=sirket.com
@@ -44,9 +44,6 @@ SMTP_USERNAME=no-reply@sirket.com
 SMTP_PASSWORD=guclusifrecik
 SMTP_AUTH=plain
 SMTP_STARTTLS_AUTO=true
-
-# Maillerin kimden gideceği
-SMTP_SENDER=no-reply@sirket.com
 ```
 
 Yeniden başlatın: `docker compose down && docker compose up -d`

@@ -11,8 +11,11 @@ Bir ortamdaki güvenlik duvarı (ister UFW, ister harici bir donanım firewall -
 | 80/443 | TCP | In/Out | HTTPS (Web) arayüzü ve API çağrıları |
 | 7443 | TCP | In/Out | Güvenli WebSocket / FreeSWITCH |
 | 16384 - 32768 | UDP | In/Out | Mediasoup / WebRTC (Kamera, Ses RTP / RTCP paketleri) |
+| 3478 | UDP/TCP | In/Out | TURN/STUN (Coturn) |
+| 5060 | UDP | **Kısıtlı** | FreeSWITCH SIP — Sadece SIP Sağlayıcısı IP'sinden izin verin |
 
-*(Eğer Coturn sunucunuz farklı bir makinedeyse, BBB sunucunuzun ayrıca dışarıdaki Coturn sunucusuna UDP 3478 dahilinde erişebilmesi gerekir).*
+> [!WARNING]
+> **SIP Portu (UDP 5060)** internete açık bırakıldığında günde binlerce korsan arama (Toll Fraud) girişimiyle karşılaşabilirsiniz. UFW üzerinde UDP 5060'ı **yalnızca** SIP sağlayıcınızın IP aralığına kısıtlayın. SIP Trunk entegrasyonu kullanmıyorsanız bu portu tamamen kapalı tutun.
 
 ## 3.2 İç Ağ ve NAT Arkasına Kurulum (Dummy NIC Çözümü)
 

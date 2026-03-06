@@ -24,7 +24,10 @@ En kronik problemlerden biridir. Eğitmen PowerPoint (.pptx) veya bir .pdf yükl
 
 **Çözüm (Kuyruğu Temizleme ve Yeniden Başlatma):**
 ```bash
-# Takılı kalan LibreOffice (soffice) işlemlerini anında öldürün
+# Önce servis yöneticisi üzerinden zarif şekilde durdurmayı deneyin
+sudo systemctl stop bbb-web
+
+# Sadece bbb-web yanıt vermiyorsa son çare olarak sert sonlandırın
 sudo killall -9 soffice.bin
 sudo killall -9 bbb-web
 

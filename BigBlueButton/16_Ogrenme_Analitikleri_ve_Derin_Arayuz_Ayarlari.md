@@ -54,8 +54,8 @@ Bu limiti `/etc/bigbluebutton/bbb-html5.yml` içerisinden doğrudan SysAdmin ola
 public:
   layout:
     autoSwapLayout: true
-  kurento:      # (Parametre adı Kurento kalsa da işlevi Mediasoup tarafından üstlenilir)
-    cameraThreshold: 25  # Aynı ekranda max 25 kamera gösterilir, kalanı sayfaya sığmadığı için sekme olarak yana taşınır.
+  kurento:      # BBB 3.x'e geçilmesine rağmen bu YAML anahtarı geriye dönük uyumluluk için hâlâ "kurento" olarak kalmaktadır; işlevi artık Mediasoup tarafından yerine getirilmektedir.
+    cameraThreshold: 25  # Aynı ekranda max 25 kamera gösterilir, kalanı yana sekme olarak taşınır.
 ```
 
 ## 16.4 Paylaşılan Notlar (Etherpad) Formatlama ve İhracı

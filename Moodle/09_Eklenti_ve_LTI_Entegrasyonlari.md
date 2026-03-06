@@ -1,6 +1,6 @@
 # 09 - Eklenti (Plugin) ve LTI Entegrasyonları
 
-Moodle'ın gücü devasa eklenti kütüphanesinden gelir. Ancak her eklenti potansiyel bir güvenlik açığı ve performans yüküdür.
+Moodle'ın gücü devasa eklenti kütüphanesinden gelir. Ancak her eklenti potansiyel bir güvenlik açığı ve performans yükü olabilir.
 
 ## 9.1 Eklenti Kurulum Stratejisi
 

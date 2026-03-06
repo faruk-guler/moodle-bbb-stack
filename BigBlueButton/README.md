@@ -19,8 +19,8 @@ Bu repo altındaki dosyalar, BigBlueButton v3.0 mimarisi için tam bir SysAdmin 
 * **Troubleshooting (Sorun Giderme):** 1007, 1020 numaralı meşhur WebRTC Hatalarının kalıcı çözümleri ve Prometheus & Grafana ile anlık izleme teknikleri.
 * **Kriz Yönetimi ve Kritik Hatalar:** Sunucu çökmesi (502 Gateway), kırık ofis sunumları (LibreOffice), veritabanı taşıma (pg_dump) ve TLS yenileme krizlerine acil müdahale rehberi.
 * **Yük Dengeleme (Scalelite/Greenlight LB):** Odaların birbirinden izole sunuculara otomatik nasıl dağıtılacağı (Cluster senaryoları) ve ortak NFS kayıt depolaması.
-* **İleri Düzey Entegrasyonlar:** REST API Checksum mantığı (LMS Bağlantıları), Webhooks, Greenlight v3 (LDAP/OAuth) ve FreeSWITCH SIP Trunk (Telefon ile katılım) mimarisi.
-* **BBB 3.0 Yenilikleri:** TLDraw entegrasyonu, Sanal Arka Planlar, **Plugin Architecture** (App Gallery), Greenlight 3.5 ve rol Yol Haritası (4.0/Ubuntu 24.04).
+* **İleri Düzey Entegrasyonlar:** REST API Checksum mantığı (LMS Bağlantıları), Webhooks, Greenlight v3 (OIDC/Keycloak) ve FreeSWITCH SIP Trunk (Telefon ile katılım) mimarisi.
+* **BBB 3.0 Yenilikleri:** TLDraw entegrasyonu, Sanal Arka Planlar, **Plugin Architecture** (App Gallery), Greenlight 3.5 ve Yol Haritası (4.0/Ubuntu 24.04).
 * **Öğrenme Analitikleri ve Frontend:** Öğrenme gösterge paneli (Learning Dashboard) yönetimi ve arayüz dosyalarına (JSON locale çevirileri) sistem yöneticisi seviyesinde müdahale teknikleri.
 
 ## Kimler İçin?

@@ -46,4 +46,4 @@ Kurulum sırasında `-w` parametresi kullanıldığında zaten UFW aktif edilir.
 Coturn (TURN) sunucu kurduğunuzda, başkalarının sizin sunucunuzdan faydalanıp internette gizli tünelleme yapamaması için sadece BBB sunucunuzun IP'sine (veya kimlik doğrulamasına) izin verilmelidir (`turnserver.conf` içerisinde `allowed-peer-ip` yapılandırılmalıdır).
 
 ---
-**Tebrikler!** Bu 16 bölümlük referans kaynağı, bir sistem yöneticisinin BigBlueButton'ı tam anlamıyla yönetmesine, sorun çözmesine ve büyümesine (Ölçeklendirme) yardımcı olacak tüm teorik ve pratik bilgiyi kapsamaktadır.
+**İpucu:** Güvenlik önlemlerini uyguladıktan sonra bir sonraki bölüm olan **API Kullanımı ve Dış Entegrasyonlar** ile devam edin.
