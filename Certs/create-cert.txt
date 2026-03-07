@@ -12,7 +12,7 @@ bbb.guler.com.crt   → SSL certificate
 
 2: Nginx için Diffie-Hellman (DH) Parametresini Unutmayın:
 mkdir -p /etc/nginx/ssl/
-openssl dhparam -out /etc/nginx/ssl/dhp-4096.pem 4096
+openssl dhparam -out /etc/nginx/ssl/dhp-2048.pem 2048
 
 3: Sertifikayı Cliente ve Servere Tanıtın:
 
