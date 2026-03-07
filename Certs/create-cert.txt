@@ -1,4 +1,4 @@
-1: (self-signed) bir sertifika oluşturun:
+1: Bir sertifika oluşturun(self-signed):
 
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout bbb.guler.com.key \
@@ -14,7 +14,10 @@ bbb.guler.com.crt   → SSL certificate
 mkdir -p /etc/nginx/ssl/
 openssl dhparam -out /etc/nginx/ssl/dhp-2048.pem 2048
 
-3: Sertifikayı Cliente ve Servere Tanıtın:
+3: Kontrol edin:
+openssl x509 -in bbb.guler.com.crt -text -noout
+
+4: Sertifikayı Cliente ve Servere Tanıtın:
 
 Server:
 cp /etc/nginx/ssl/bbb.guler.com.crt /usr/local/share/ca-certificates/bbb.guler.com.crt
