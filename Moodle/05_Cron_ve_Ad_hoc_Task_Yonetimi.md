@@ -111,6 +111,22 @@ sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php
 > [!WARNING]
 > Kilidi temizlemeden önce görevin gerçekten asılı kaldığını doğrulayın. `Site Administration > Server > Scheduled tasks` sayfasından görevin "Running since" değerinin 1 saatten eski olup olmadığını kontrol edin.
 
+## 5.6 Kurumsal E-posta (SMTP / Exchange) Yapılandırması
+
+Cron'un başarıyla çalışmasıyla beraber forum bildirimlerinin ve şifre sıfırlama maillerinin gönderilebilmesi için kurumsal SMTP tanımlarının harici olarak yapılmış olması gerekir.
+
+`Site Administration > Server > Email > Outgoing mail configuration` yolunu izleyin:
+
+*   **SMTP hosts:** `mail.kurum.local` (Exchange sunucu IP veya hostname)
+*   **SMTP port:** `587` (TLS) veya `25` (Güvenlik Yok)
+*   **SMTP Güvenlik:** `TLS` (587 için) veya `Yok` (25 için)
+*   **SMTP kullanıcı:** `moodle@kurum.com`
+*   **Gönderen adresi / adı:** `moodle@kurum.com` / `Moodle`
+
+**Bilinmesi Gereken Kurumsal Exchange Kuralları:**
+1.  **Relay İzni:** Moodle sunucusunun IP adresine Exchange sunucusu üzerinde mutlaka Relay (Aktarım) izni verilmelidir, aksi takdirde mailler kabul edilmez.
+2.  **Firewall İzni:** Kurum ağındaki Firewall üzerinde 25 veya 587 portlarının Moodle sunucusundan Mail sunucusuna doğru açık olduğundan emin olun.
+
 ---
 
 > [!TIP]

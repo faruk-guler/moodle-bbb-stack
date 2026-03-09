@@ -134,6 +134,9 @@ server {
 }
 ```
 
+> [!NOTE]
+> Kendi SSL sertifikanızı (Örn: kurum içi sunucudan alınan `.crt` ve `.key` dosyaları) kullanacaksanız; dosyalarınızı `/etc/nginx/ssl/` dizinine kopyalayıp Nginx ayarlarında yerlerini göstermeyi ve `sudo chmod 600 /etc/nginx/ssl/*` ile yetkilerini kısmayı unutmayın. Ayrıca `config.php` dosyanızda `$CFG->wwwroot = 'https://moodle.sirket.com';` (https) olarak güncellenmiş olmalıdır.
+
 ## 2.7 PostgreSQL Kurulumu
 
 ```bash
@@ -174,6 +177,18 @@ sudo nginx -t && sudo systemctl reload nginx
 ```
 
 Kurulumu tamamlamak için tarayıcıdan `https://moodle.sirket.com/install.php` adresine girin.
+
+> [!NOTE]
+> Moodle kurulum sihirbazını GUI üzerinden bitirdiğinizde **Varsayılan Admin Hesabı** tanımlaması istenir. Geleneksel yapıda aşağıdaki gibi standart oluşturulabilir:
+> *   **Kullanıcı Adı:** `admin`
+> *   **Şifre:** `Pass3556++!!` (veya sizin belirlediğiniz güçlü bir şifre)
+> *   **Site Adı:** `GULER Uzaktan Eğitim Sistemi`
+
+### 2.9 Varsayılan Portlar ve Erişim
+Kurumsal Firewall kuralları için aşağıdaki portların açık olduğundan emin olun:
+*   **HTTP/HTTPS:** 80, 443
+*   **PostgreSQL:** 5432
+*   **Redis:** 6379
 
 ---
 

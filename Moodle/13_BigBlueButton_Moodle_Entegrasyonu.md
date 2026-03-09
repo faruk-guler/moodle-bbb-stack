@@ -86,6 +86,15 @@ CHECKSUM=$(echo -n "hooks/create${MOODLE_URL}${SECRET}" | sha256sum | awk '{prin
 curl "https://bbb.sirket.com/bigbluebutton/api/hooks/create?callbackURL=${MOODLE_URL}&checksum=${CHECKSUM}"
 ```
 
+## 13.7 Sık Karşılaşılan BBB Bağlantı Sorunları (cURL Engeli)
+
+BigBlueButton veya entegre çalışan Greenlight sunucusuna erişim esnasında API hataları yaşıyorsanız, Moodle'ın varsayılan HTTP güvenlik kalkanı (cURL) lokal isteklerinizi engelliyor olabilir.
+
+**Çözüm:**
+`Site Administration > Security > HTTP security > cURL blocked hosts list` menüsüne gidin.
+Eğer BBB sunucunuz lokal ağdaysa listedeki `10.0.0.0/8` (veya `192.168.0.0/16`) bloğunu listeden **silin**.
+Bu sayede Moodle sunucusunun cURL üzerinden lokal bloktaki BigBlueButton API'sine istek atmasına izin vermiş olursunuz.
+
 ---
 
 > [!TIP]

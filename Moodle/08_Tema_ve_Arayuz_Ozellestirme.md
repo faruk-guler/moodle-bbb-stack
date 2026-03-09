@@ -94,6 +94,12 @@ Tüm tema altyapısını değiştirmek yerine sadece kurumsal renkleri uygulamak
 sudo -u www-data php8.3 /var/www/moodle/public/admin/tool/langimport/cli/langimport.php --lang=tr
 ```
 
+> [!NOTE]
+> Arayüzden (GUI) tema veya eklenti yükleme adımları:
+> 1. `Site Yönetimi > Eklentiler > Eklenti yükle` menüsüne gidin.
+> 2. Hazırladığınız veya indirdiğiniz tema/eklenti dosyasını (`.zip`) yükleyin.
+> 3. Temayı aktif etmek için: `Site Yönetimi > Görünüm > Temalar > Tema seçici` yolunu izleyip aktif edin.
+
 Belirli terimleri kuruma özel değiştirmek için (Örn: "Ders" → "Eğitim"):
 
 `Site Administration > Language > Language customization > tr`

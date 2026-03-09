@@ -92,6 +92,33 @@ LTI 1.3: Platform/Client IDs + RS256 Anahtar Çifti (Daha güvenli)
 cat /var/www/moodle/public/mod/eklentime/version.php | grep "requires"
 ```
 
+## 9.6 LDAP / Active Directory Kimlik Doğrulama Entegrasyonu
+
+Moodle'ın yerleşik LDAP eklentisi (`auth_ldap`), kurumsal ortamlarda kullanıcıların Active Directory kimlikleriyle giriş yapmasını sağlar.
+
+**LDAPS Sunucu Ayarları:**
+`Site Administration > Plugins > Authentication > LDAP server` adımından eklentiyi aktifleştirin:
+
+*   **Host URL:** `ldaps://10.5.25.19;ldaps://10.5.25.20` (Yedekli mimari)
+*   **Version:** `3`
+*   **TLS Kullan:** `Hayır` (LDAPS kullanıldığı için)
+
+> [!NOTE]
+> Active Directory üzerinde Self-Signed bir sertifika kullanılıyorsa, Moodle sunucusunda sertifika reddini önlemek için `echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf` komutunu çalıştırıp web sunucunuzu yeniden başlatmanız gerekir.
+
+**Bağlantı ve Context Ayarları:**
+*   **Distinguished Name (DN):** `CN=moodlelogin,OU=TestUser,DC=guler,DC=com`
+*   **Bağlantı Şifresi:** `*****`
+*   **Contexts:** `OU=Bilgi_Islem,OU=PersonIT,OU=Person,DC=guler,DC=com`
+*   **User attribute:** `sAMAccountName` (Kullanıcı adı login için)
+
+**Veri Haritalama (Data Mapping):**
+Kullanıcı profil bilgilerinin her girişte AD'den güncellenmesi için:
+*   Adı (`firstname`): `givenName` -> **Her girişte güncelle**, **Kilitli**
+*   Soyadı (`lastname`): `sn` -> **Her girişte güncelle**, **Kilitli**
+*   E-posta (`email`): `mail` -> **Her girişte güncelle**
+*   Askıdaki öznitelik (Status): `userAccountControl`
+
 ---
 
 > [!WARNING]
