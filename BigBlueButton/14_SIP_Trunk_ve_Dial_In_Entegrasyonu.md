@@ -1,4 +1,4 @@
-# Bölüm 13: FreeSWITCH SIP Trunk ve Dial-In Entegrasyonu
+# Bölüm 14: FreeSWITCH SIP Trunk ve Dial-In Entegrasyonu
 
 BigBlueButton, sadece tarayıcı üzerinden web kameralı ve mikrofonlu katılımı (WebRTC) desteklemez. Altyapısındaki **FreeSWITCH** bileşeni, gerçek bir telefon santrali (VoIP Softswitch) gibi çalışabilir.
 

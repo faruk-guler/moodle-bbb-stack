@@ -1,4 +1,4 @@
-# Merkezi Log Yönetimi — Moodle & BigBlueButton (2026)
+# Bölüm 3: Merkezi Log Yönetimi — Moodle & BigBlueButton (2026)
 
 Moodle ve BigBlueButton birlikte çalıştığında onlarca farklı servisin logunu takip etmek gerekir. Her sunucuya SSH açıp `tail -f` yapmak ölçeklenebilir değildir. Bu bölüm, tüm logları merkezi bir noktada toplama, sorgulama ve alarm oluşturma yöntemlerini kapsar.
 

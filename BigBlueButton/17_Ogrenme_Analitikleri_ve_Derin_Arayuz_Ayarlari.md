@@ -1,4 +1,4 @@
-# Bölüm 16: Öğrenme Analitikleri (Learning Dashboard) ve Derin Arayüz Özelleştirmeleri
+# Bölüm 17: Öğrenme Analitikleri (Learning Dashboard) ve Derin Arayüz Özelleştirmeleri
 
 BigBlueButton sadece bir video konferans ekranı değildir; aynı zamanda akademik performansı ölçen bir eğitim aracıdır. Bu bölümde, sistem yöneticilerinin BigBlueButton'ın en derin kullanıcı arayüzü ayarlarına (Frontend JSON) nasıl müdahale edecekleri ve "Learning Dashboard" sistemini nasıl yönetecekleri anlatılmaktadır.
 

@@ -1,4 +1,4 @@
-# Bölüm 14: BigBlueButton 3.0.x (2026 Standartları) — Yenilikler ve SysAdmin Notları
+# Bölüm 15: BigBlueButton 3.0.x (2026 Standartları) — Yenilikler ve SysAdmin Notları
 
 Mart 2026 itibarıyla **BigBlueButton 3.0.22** kararlı (stable) sürümdür. Greenlight varsayılan ön yüzü ise **3.5** sürümüne ulaşmıştır. 3.x serisi, eğitim sektörünün de-facto standardı haline gelmiş; 2.x sürümleri artık tamamen terk edilmiştir.
 

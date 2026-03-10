@@ -1,4 +1,4 @@
-# Bölüm 15: Sık Karşılaşılan Hatalar ve Kriz Yönetimi (Troubleshooting Gelişmiş)
+# Bölüm 16: Sık Karşılaşılan Hatalar ve Kriz Yönetimi (Troubleshooting Gelişmiş)
 
 BigBlueButton (BBB) birbirinden bağımsız birçok servisin (Node.js, Ruby, Java, FreeSWITCH, Mediasoup, Nginx) birleşimidir. Kritik hataların büyük bir kısmı, bu servislerin birbirleriyle iletişiminin (mesaj kuyruklarının veya izinlerin) kopmasından meydana gelir.
 

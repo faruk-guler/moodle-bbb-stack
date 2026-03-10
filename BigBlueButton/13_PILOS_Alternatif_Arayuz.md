@@ -1,4 +1,4 @@
-# Bölüm 12.1: PILOS — Greenlight'a Alternatif Akademik Ön Yüz (Frontend)
+# Bölüm 13: PILOS — Greenlight'a Alternatif Akademik Ön Yüz (Frontend)
 
 BigBlueButton'ı doğrudan kullanıcılarla buluşturmak için resmi arayüz **Greenlight** v3'tür. Ancak, özellikle üniversiteler ve akademik ortamlar için Almanya'daki TH Mittelhessen Uygulamalı Bilimler Üniversitesi (THM) tarafından geliştirilmiş, güçlü bir açık kaynak alternatif bulunmaktadır: **PILOS** (Platform for Interactive Live-Online Seminars).
 

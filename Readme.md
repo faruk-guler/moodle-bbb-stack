@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Moodle 5.1.3</strong> · <strong>BigBlueButton 3.0.22</strong> · <strong>Greenlight 3.5</strong><br>
+  <strong>Moodle 5.1.3</strong> · <strong>BigBlueButton 3.0.22</strong> · <strong>Greenlight 3.5</strong> · <strong>PILOS 4.x</strong><br>
   Mart 2026 · Türkçe · Açık Kaynak
 </p>
 
@@ -45,7 +45,7 @@ Bu depo, **Moodle** (LMS) ve **BigBlueButton** (Video Konferans) platformların�
 │   ├── 15_Moodle_4_5_ve_Gelecek_Vizyonu.md
 │   └── README.md
 │
-├── BigBlueButton/             ← 16 bölüm — BBB v3.0.x SysAdmin Rehberi
+├── BigBlueButton/             ← 17 bölüm — BBB v3.0.x SysAdmin Rehberi
 │   ├── 01_BBB_Mimari_ve_Bilesenler.md
 │   ├── 02_Sistem_Gereksinimleri_ve_Kurulum.md
 │   ├── 03_Ag_Guvenlik_Duvari_ve_TURN_STUN.md
@@ -58,16 +58,18 @@ Bu depo, **Moodle** (LMS) ve **BigBlueButton** (Video Konferans) platformların�
 │   ├── 10_Guncelleme_Yedekleme_ve_Guvenlik.md
 │   ├── 11_API_Kullanimi_ve_Dis_Entegrasyonlar.md
 │   ├── 12_Greenlight_v3_Ileri_Yonetim.md
-│   ├── 12_1_PILOS_Alternatif_Arayuz.md
-│   ├── 13_SIP_Trunk_ve_Dial_In_Entegrasyonu.md
-│   ├── 14_BBB_3_0_Yenilikleri_ve_Kullanimi.md
-│   ├── 15_Sik_Karsilasilan_Hatalar_ve_Kriz_Yonetimi.md
-│   ├── 16_Ogrenme_Analitikleri_ve_Derin_Arayuz_Ayarlari.md
+│   ├── 13_PILOS_Alternatif_Arayuz.md
+│   ├── 14_SIP_Trunk_ve_Dial_In_Entegrasyonu.md
+│   ├── 15_BBB_3_0_Yenilikleri_ve_Kullanimi.md
+│   ├── 16_Sik_Karsilasilan_Hatalar_ve_Kriz_Yonetimi.md
+│   ├── 17_Ogrenme_Analitikleri_ve_Derin_Arayuz_Ayarlari.md
 │   └── README.md
 │
-├── Kimlik_Hizmetleri_ve_SSO.md  ← Active Directory (LDAP), SAML2 (Azure/SSO) entegrasyonu
-├── Eposta_Altyapisi_ve_DMARC.md ← Moodle/BBB SMTP ayarları, SPF/DKIM ve Spam koruması
-├── Merkezi_Log_Yonetimi.md      ← Loki/Grafana & ELK Stack ile merkezi loglama
+├── Altyapi_ve_Entegrasyonlar/ ← 3 bölüm — Ortak Entegrasyon Rehberi
+│   ├── 01_Kimlik_Hizmetleri_ve_SSO.md
+│   ├── 02_Eposta_Altyapisi_ve_DMARC.md
+│   └── 03_Merkezi_Log_Yonetimi.md
+├── Certs/                       ← Self-Signed SSL Sertifika Referans Örnekleri
 └── Readme.md                    ← Bu dosya
 ```
 
@@ -80,10 +82,10 @@ Bu depo, **Moodle** (LMS) ve **BigBlueButton** (Video Konferans) platformların�
 | **Mimari** | Moodle 5.x `/public` dizin yapısı, istek akışı, config.php parametreleri |
 | **Kurulum** | PHP 8.3/8.4, PostgreSQL 16, Nginx vhost, PHP-FPM havuz yapılandırması |
 | **Caching** | Redis Session/MUC, OPcache, PostgreSQL performance tuning |
-| **Güvenlik** | UFW, HSTS, SSL/TLS, config.php hardening, Security Checks tablosu |
+| **Güvenlik** | UFW, HSTS, SSL/TLS, config.php hardening, SAML2 (Microsoft Entra ID) SSO |
 | **Yedekleme** | Otomatik bash betiği, Git tabanlı sürüm yükseltme, rollback stratejisi |
 | **Ölçeklendirme** | Nginx upstream LB, NFS shared storage, PostgreSQL read replicas |
-| **Entegrasyon** | BBB API bağlantısı, LTI 1.3, Webhook, mobil uygulama, Learning Analytics |
+| **Entegrasyon** | BBB API bağlantısı, LTI 1.3 Advantage, Webhook, Mobil uygulama (Push) |
 
 > **Kritik Not:** Moodle 5.0 ile gelen `/public` dizin mimarisi, web sunucusu root'unun değişmesini zorunlu kılmıştır. Tüm bölümlerdeki komutlar bu yeni yapıya göre güncellenmiştir.
 
@@ -93,13 +95,13 @@ Bu depo, **Moodle** (LMS) ve **BigBlueButton** (Video Konferans) platformların�
 
 | Konu | İçerik |
 | :--- | :--- |
-| **Mimari** | Nginx, bbb-web, bbb-html5, Redis, MongoDB, FreeSWITCH, Mediasoup |
-| **Kurulum** | `bbb-install.sh` (v3.0.x-release), Ubuntu 22.04, Let's Encrypt SSL |
-| **Ağ** | NAT arkası dummy interface, UFW port yönetimi, Coturn TURN/STUN |
-| **Kayıt** | Recording pipeline (Archive → Sanity → Process → Publish) |
-| **Ölçeklendirme** | Scalelite cluster, NFS kayıt paylaşımı, multi-node yapı |
-| **Entegrasyon** | REST API checksum, Webhooks, Greenlight v3 & PILOS, SIP Trunk, LMS bağlantıları |
-| **3.0 Yenilikleri** | TLDraw beyaz tahta, Plugin Architecture, sanal arka plan, Greenlight 3.5 |
+| **Mimari** | Sadece Mediasoup (Kurento yok), bbb-web, bbb-html5, Redis, FreeSWITCH |
+| **Kurulum** | `bbb-install.sh` (v3.0.x-release), Ubuntu 22.04 LTS zorunluluğu, Let's Encrypt SSL |
+| **Ağ ve Güvenlik** | Dummy interface (NAT arkası), UFW port yönetimi, Ayrı Coturn TURN/STUN Sunucusu |
+| **Arayüz (Frontend)** | Greenlight v3.5 (PostgreSQL & React) veya akademik odaklı **PILOS v4** alternatifleri |
+| **Ölçeklendirme** | Scalelite cluster, Greenlight v3 dahili Load Balancer, NFS ortak kayıt paylaşımı |
+| **Kimlik Doğrulama** | Keycloak üzerinden OpenID Connect (OIDC) ile LDAP/Active Directory entegrasyonu |
+| **Genel Özellikler** | TLDraw beyaz tahta, Plugin Architecture, Sanal arka plan, SIP Trunk Dial-in entegrasyonu |
 
 > **Kritik Not:** BBB 3.0.x yalnızca Ubuntu 22.04 LTS üzerinde resmi destek sunar. Ubuntu 24.04 desteği BBB 4.0 ile planlanmaktadır.
 

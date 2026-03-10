@@ -24,6 +24,8 @@ Eğer 500 personelli bir şirketiniz varsa ve personelin Greenlight'a mevcut Act
 
 Bu nedenle LDAP sunucunuzu bağlamak için araya ücretsiz bir açık kaynak Kimlik Sağlayıcı (IdP) olan **Keycloak** kurmalısınız.
 
+Detaylı mimari ve Keycloak kurulum adımları için [Kimlik Hizmetleri ve SSO](file:///c:/Users/SISTEM/Downloads/Antigravity/Altyapi_ve_Entegrasyonlar/01_Kimlik_Hizmetleri_ve_SSO.md) dokümanını temel alın.
+
 **Yeni Kimlik Doğrulama Mimarisi:**
 
 ```

@@ -1,4 +1,4 @@
-# E-posta Altyapısı, SMTP ve Gönderilebilirlik (SPF, DKIM, DMARC)
+# Bölüm 2: E-posta Altyapısı, SMTP ve Gönderilebilirlik (SPF, DKIM, DMARC)
 
 Moodle gibi devasa LMS sistemleri veya BigBlueButton'ın Greenlight arayüzü yüz binlerce e-posta üretir:
 - Yeni hesap aktivasyon linkleri

@@ -127,6 +127,9 @@ Cron'un başarıyla çalışmasıyla beraber forum bildirimlerinin ve şifre sı
 1.  **Relay İzni:** Moodle sunucusunun IP adresine Exchange sunucusu üzerinde mutlaka Relay (Aktarım) izni verilmelidir, aksi takdirde mailler kabul edilmez.
 2.  **Firewall İzni:** Kurum ağındaki Firewall üzerinde 25 veya 587 portlarının Moodle sunucusundan Mail sunucusuna doğru açık olduğundan emin olun.
 
+> [!NOTE]
+> E-postaların spama düşmemesi için gereken SPF, DKIM ve DMARC kayıtlarının detayları için [E-posta Altyapısı ve DMARC](file:///c:/Users/SISTEM/Downloads/Antigravity/Altyapi_ve_Entegrasyonlar/02_Eposta_Altyapisi_ve_DMARC.md) rehberine bakın.
+
 ---
 
 > [!TIP]

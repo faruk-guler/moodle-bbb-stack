@@ -1,4 +1,4 @@
-# Kurumsal Kimlik Yönetimi ve SSO (LDAP / SAML2 / OAuth2)
+# Bölüm 1: Kurumsal Kimlik Yönetimi ve SSO (LDAP / SAML2 / OAuth2)
 
 Moodle ve BigBlueButton'ı (BBB) binlerce kullanıcılı kurumsal bir ortama (Üniversite, Holding, Kamu) entegre ederken manuel kullanıcı açmak operasyonel bir yüktür. Kullanıcıların mevcut e-posta adresleri veya şirket şifreleri ile her iki sisteme giriş yapabilmesi (Single Sign-On - SSO) bir zorunluluktur.
 
