@@ -59,6 +59,7 @@ Antigravity/
 │   ├── 10_Guncelleme_Yedekleme_ve_Guvenlik.md
 │   ├── 11_API_Kullanimi_ve_Dis_Entegrasyonlar.md
 │   ├── 12_Greenlight_v3_Ileri_Yonetim.md
+│   ├── 12_1_PILOS_Alternatif_Arayuz.md
 │   ├── 13_SIP_Trunk_ve_Dial_In_Entegrasyonu.md
 │   ├── 14_BBB_3_0_Yenilikleri_ve_Kullanimi.md
 │   ├── 15_Sik_Karsilasilan_Hatalar_ve_Kriz_Yonetimi.md
@@ -98,7 +99,7 @@ Antigravity/
 | **Ağ** | NAT arkası dummy interface, UFW port yönetimi, Coturn TURN/STUN |
 | **Kayıt** | Recording pipeline (Archive → Sanity → Process → Publish) |
 | **Ölçeklendirme** | Scalelite cluster, NFS kayıt paylaşımı, multi-node yapı |
-| **Entegrasyon** | REST API checksum, Webhooks, Greenlight v3, SIP Trunk, LMS bağlantıları |
+| **Entegrasyon** | REST API checksum, Webhooks, Greenlight v3 & PILOS, SIP Trunk, LMS bağlantıları |
 | **3.0 Yenilikleri** | TLDraw beyaz tahta, Plugin Architecture, sanal arka plan, Greenlight 3.5 |
 
 > **Kritik Not:** BBB 3.0.x yalnızca Ubuntu 22.04 LTS üzerinde resmi destek sunar. Ubuntu 24.04 desteği BBB 4.0 ile planlanmaktadır.
@@ -131,6 +132,7 @@ Antigravity/
 ## 📋 Hızlı Başlangıç Komutları
 
 ### Moodle Durumu
+
 ```bash
 # Moodle sürümünü kontrol et
 cat /var/www/moodle/public/version.php | grep "\$release"
@@ -143,6 +145,7 @@ sudo journalctl -u moodle-cron.service --since "1 hour ago"
 ```
 
 ### BigBlueButton Durumu
+
 ```bash
 # BBB sürüm ve servis durumu
 sudo bbb-conf --version

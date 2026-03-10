@@ -12,8 +12,11 @@ BBB API'si ile iletişim kuran her uygulamanın URL sonuna bir `checksum` ekleme
 1. Örneğin bir toplantı yaratmak için `create` metodunu çağıracağız.
 2. Parametrelerimiz: `name=Matematik&meetingID=mat101`
 3. Sırrımız (`bbb-conf --secret` ile öğrendiğimiz): `xyz123abc`
-4. Formül: `SHA1("create" + "name=Matematik&meetingID=mat101" + "xyz123abc")`
-5. Üretilen SHA1 Hash'i (örneğin `8f1e...`) URL'nin sonuna `&checksum=8f1e...` olarak eklenir.
+4. Formül: `SHA256("create" + "name=Matematik&meetingID=mat101" + "xyz123abc")`
+5. Üretilen SHA256 Hash'i (örneğin `8f1e...`) URL'nin sonuna `&checksum=8f1e...` olarak eklenir.
+
+> [!WARNING]
+> BBB 3.0 ile birlikte checksum algoritması **SHA1'den SHA256'ya** değiştirilmiştir. Eski (2.x) sürümlerden yükseltme yapıyorsanız, `bigbluebutton.properties` dosyasında `securitySalt.supportedChecksumAlgorithms=sha256,sha512` ve `checkSumAlgorithmForBreakouts=SHA256` parametrelerini kontrol edin. SHA1 artık varsayılan olarak kabul edilmez.
 
 ## 11.2 En Sık Kullanılan API Metotları
 
@@ -41,20 +44,24 @@ BBB sunucunuzu ayağa kaldırdıktan sonra bir okula bağlamak istiyorsanız:
    En popüler eklenti "BigBlueButton API" plugin'idir. Ayarlarına gidip aynı şekilde URL ve Secret Key girilir. Sayfalara veya yazılara Shortcode (örn: `[bigbluebutton meeting="test"]`) ekleyerek odaya katılım butonu çıkarılabilir.
 
 ## 11.4 Güvenlik İpuçları
+
 - API Sırrınız (Shared Secret) ele geçirilirse herkes sizin sunucunuz üzerinde oda açıp 1000 saatlik işlemler yaparak sunucu CPU'sunu sömürebilir. Sırrınızı kimseyle paylaşmayın.
 - Gerekirse sırrınızı değiştirmek için: `sudo bbb-conf --setsecret yenisifre_buraya`
 
 ## 11.5 Webhooks (Anlık Olay Bildirimleri)
 
-BigBlueButton, periyodik olarak API'ye "Toplantı bitti mi? Biri girdi mi?" diye sormanız yerine, bir olay yaşandığında kendi sisteminize anında HTTP POST atılmasını sağlayan **bbb-webhooks** altyapısına sahiptir. 
+BigBlueButton, periyodik olarak API'ye "Toplantı bitti mi? Biri girdi mi?" diye sormanız yerine, bir olay yaşandığında kendi sisteminize anında HTTP POST atılmasını sağlayan **bbb-webhooks** altyapısına sahiptir.
 
 **Kullanım Senaryoları:**
+
 - Bir kullanıcı odaya bağlandığında LMS sisteminize "Katıldı" (UserJoined) sinyali gönderir.
 - Bir toplantının mp4 işlenmesi bittiğinde CRM panelinize "Kayıt Hazır" (RecordingReady) bildirimi ve linki ulaştırır.
 
 **Kurulum ve Kullanım:**
 Sunucunuzda kurulu gelmemiş olabilir, kurmak için:
+
 ```bash
 sudo apt install bbb-webhooks
 ```
+
 Kurulduktan sonra bir "Callback URL (Bildirimlerin gideceği adresiniz)" yaratmak için, `bbb-web` üzerinden `hooks/create` API çağrısı yapmalısınız (Klasik Checksum hesaplayarak). Kayıt işlemi başarılı olduktan sonra yaşanan webRTC olayları dahil tüm aksiyonlar uygulamanıza POST JSON verisi olarak akmaya başlayacaktır.

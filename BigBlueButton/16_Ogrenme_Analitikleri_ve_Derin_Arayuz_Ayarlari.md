@@ -5,10 +5,11 @@ BigBlueButton sadece bir video konferans ekranı değildir; aynı zamanda akadem
 ## 16.1 Öğrenme Analitikleri (Learning Dashboard) Nedir?
 
 Learning Dashboard, moderatörlerin (öğretmenlerin) ders sırasında veya ders bittikten sonra öğrencilerin:
+
 - Ne kadar süre konuştuğunu,
 - Hangi anketlere ne cevap verdiğini (Anket skoru),
 - Kameralarını açıp açmadığını,
-- Dersteki genel "Aktivite Puanını" 
+- Dersteki genel "Aktivite Puanını"
 görebildikleri güçlü bir modül olup, BBB Node.js backend'ine gömülü ayrı bir servistir.
 
 **SysAdmin Yönergeleri:**
@@ -19,6 +20,7 @@ public:
   app:
     learningDashboardEnabled: false    # Analitik tablosunu öğretmenlerden gizler
 ```
+
 *Ayar değiştirildikten sonra `systemctl restart bbb-html5` komutu çalıştırılmalıdır.*
 
 > [!TIP]
@@ -29,12 +31,14 @@ public:
 Arayüzdeki standart metinleri kurumunuza göre değiştirebilirsiniz. Örneğin arayüzde yazan "Kullanıcı" kelimesini "Öğrenci", veya "Sohbet" yazısını "Canlı Mesajlaşma" yapmak isteyebilirsiniz. Frontend tamamen compile edilmiş (build/paketlenmiş) bir React uygulaması olsa da, çeviri dosyaları sunucuda çıplak JSON formatında durur.
 
 **Dil (Locale) Dosyalarının Konumu:**
+
 ```bash
 /usr/share/meteor/bundle/programs/web.browser/app/locales/
 # Örn: tr.json, en.json, de.json
 ```
 
 **Değiştirme ve Kalıcı Kılma:**
+
 1. Türkçe dil dosyasını bulun: `nano /usr/share/meteor/bundle/programs/web.browser/app/locales/tr.json`
 2. Dosya içerisindeki `app.chat.title`: "Sohbet" gibi "Key:Value" değerlerindeki sağ tarafı editleyin.
 3. Node.js backend'i yeniden başlatın: `systemctl restart bbb-html5`
@@ -54,9 +58,16 @@ Bu limiti `/etc/bigbluebutton/bbb-html5.yml` içerisinden doğrudan SysAdmin ola
 public:
   layout:
     autoSwapLayout: true
-  kurento:      # BBB 3.x'e geçilmesine rağmen bu YAML anahtarı geriye dönük uyumluluk için hâlâ "kurento" olarak kalmaktadır; işlevi artık Mediasoup tarafından yerine getirilmektedir.
-    cameraThreshold: 25  # Aynı ekranda max 25 kamera gösterilir, kalanı yana sekme olarak taşınır.
+  media:
+    cameraPagination:
+      enabled: true
+      desktopPageSizes:   # Masaüstünde aynı ekranda max kamera sayısı
+        moderator: 25
+        viewer: 16
 ```
+
+> [!NOTE]
+> BBB 3.0 öncesi sürümlerde kamera eşik değerleri `kurento:` YAML anahtarı altında tanımlanıyordu. v3.0 ile bu ayarlar `media:` ve `cameraPagination:` altına taşınmıştır. Eski ayar dosyalarınızı güncellemeyi unutmayın.
 
 ## 16.4 Paylaşılan Notlar (Etherpad) Formatlama ve İhracı
 

@@ -18,6 +18,7 @@ Mart 2026 itibarıyla **BigBlueButton 3.0.22** kararlı (stable) sürümdür. Gr
 ## 14.2 Yeni TLDraw Beyaz Tahta
 
 BBB 3.0 ile birlikte modern **TLDraw** altyapısına geçilmiştir:
+
 - **Vektörel Çizim:** Nesneler seçilebilir, taşınabilir, gruplanabilir
 - **Gelişmiş Araçlar:** Yapışkan notlar, akıllı oklar, pürüzsüz serbest çizim
 - **Daha Az Bant Genişliği:** Olaylar NodeJS ve Redis üzerinden optimize edilmiş paketlerle iletilir
@@ -37,9 +38,15 @@ ls /etc/bigbluebutton/bbb-html5-with-plugin-support/
 ## 14.4 Greenlight 3.5 Yenilikleri
 
 ```bash
-# Greenlight sürümünü kontrol et
+# Greenlight Docker image sürümünü kontrol et
 cd ~/greenlight-v3
-docker compose exec greenlight bundle exec rake --version
+
+# Yöntem 1: Docker image tag'inden sürümü oku
+docker compose images greenlight
+
+# Yöntem 2: Konteyner içinden Rails ortam bilgisini oku
+docker compose exec greenlight bundle exec rake greenlight:version 2>/dev/null || \
+  docker inspect greenlight-v3-greenlight-1 --format '{{ index .Config.Labels "org.opencontainers.image.version" }}'
 
 # Greenlight 3.5'e güncellemek için
 docker compose pull
@@ -47,6 +54,7 @@ docker compose up -d
 ```
 
 Greenlight 3.5 ile gelen yenilikler:
+
 - Basitleştirilmiş arayüz (daha az adımda oda oluşturma)
 - Gelişmiş oda ayarları (katılımcı limiti, bekleme odası zorunluluğu)
 - OIDC (OpenID Connect) desteği geliştirildi

@@ -6,7 +6,7 @@ Greenlight v3, önceki sürümlerden farklı olarak daha modern (React frontend,
 
 ## 12.1 Yönetici Paneli ve Rol Yapılandırması (RBAC)
 
-Greenlight v3, Rol Tabanlı Erişim Kontrolü (Role-Based Access Control) sunar. 
+Greenlight v3, Rol Tabanlı Erişim Kontrolü (Role-Based Access Control) sunar.
 
 - **Super Administrator:** Sitenin ana rengini (branding), kayıt olma politikalarını ve tüm diğer kullanıcıları yönetir.
 - **Administrator:** Oda oluşturabilir, diğerlerinin kayıtlarını (recordings) ve odalarını görebilir.
@@ -17,7 +17,7 @@ Greenlight v3, Rol Tabanlı Erişim Kontrolü (Role-Based Access Control) sunar.
 
 ## 12.2 Kurumsal Kimlik Doğrulama: LDAP ve Active Directory (Keycloak OIDC)
 
-Eğer 500 personelli bir şirketiniz varsa ve personelin Greenlight'a mevcut Active Directory (şirket) şifresiyle girmesini istiyorsanız bir entegrasyon şarttır. 
+Eğer 500 personelli bir şirketiniz varsa ve personelin Greenlight'a mevcut Active Directory (şirket) şifresiyle girmesini istiyorsanız bir entegrasyon şarttır.
 
 > [!WARNING]
 > **Önemli Değişiklik:** Greenlight v2'deki doğrudan LDAP entegrasyonu (`LDAP_SERVER=...`) Greenlight v3 ile birlikte **kaldırılmıştır**. v3 mimarisi, güvenliği ve esnekliği artırmak amacıyla yalnızca OpenID Connect (OIDC) ve OAuth2 (Google/O365) protokollerini destekler.
@@ -25,6 +25,7 @@ Eğer 500 personelli bir şirketiniz varsa ve personelin Greenlight'a mevcut Act
 Bu nedenle LDAP sunucunuzu bağlamak için araya ücretsiz bir açık kaynak Kimlik Sağlayıcı (IdP) olan **Keycloak** kurmalısınız.
 
 **Yeni Kimlik Doğrulama Mimarisi:**
+
 ```
 Active Directory / LDAP Sunucusu
         ↑ ↓ (LDAPS Bind)
@@ -59,7 +60,7 @@ services:
     restart: unless-stopped
 
   keycloak:
-    image: quay.io/keycloak/keycloak:24.0
+    image: quay.io/keycloak/keycloak:26.0
     command: start --optimized
     environment:
       KC_DB: postgres
@@ -91,9 +92,9 @@ docker compose up -d
 
 Admin panelinde: Sol menü → `Realm Settings` → **"BigBlueButton"** adında yeni bir Realm oluşturun.
 
-2. **Keycloak - LDAP Bağlantısı:** Admin panelinde `User Federation` → `Add LDAP provider`. Sunucu IP, Bind DN (`CN=ReadUser,OU=Admin,DC=sirket,DC=local`) ve parolayı girin. `Synchronize all users` ile AD kullanıcılarını Keycloak'a aktarın.
-3. **Keycloak - Greenlight OIDC İstemcisi:** `Clients` → `Create client` → Client ID: `greenlight`, `Client authentication: ON`. Oluşan **Client Secret**'ı kopyalayın.
-4. **Greenlight v3 (`.env`) Yapılandırması:** Greenlight sunucunuza gidip `.env` dosyasına OIDC parametrelerini ekleyin:
+1. **Keycloak - LDAP Bağlantısı:** Admin panelinde `User Federation` → `Add LDAP provider`. Sunucu IP, Bind DN (`CN=ReadUser,OU=Admin,DC=sirket,DC=local`) ve parolayı girin. `Synchronize all users` ile AD kullanıcılarını Keycloak'a aktarın.
+2. **Keycloak - Greenlight OIDC İstemcisi:** `Clients` → `Create client` → Client ID: `greenlight`, `Client authentication: ON`. Oluşan **Client Secret**'ı kopyalayın.
+3. **Greenlight v3 (`.env`) Yapılandırması:** Greenlight sunucunuza gidip `.env` dosyasına OIDC parametrelerini ekleyin:
 
 ```env
 # Varsayılan kimlik doğrulamasını OIDC yapın

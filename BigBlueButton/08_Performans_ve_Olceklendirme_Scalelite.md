@@ -10,10 +10,10 @@ Scalelite, BigBlueButton'ın yaratıcıları (Blindside Networks) tarafından ge
 
 - Kullanıcı (Öğretmen) Moodle veya Greenlight üzerindeki "Derse Katıl" butonuna basar.
 - İstek `scalelite.sirket.com` adresine (Nginx) gelir.
-- Scalelite arkasındaki 10 adet farklı BBB sunucusunun CPU/RAM yüküne veya içindeki kişi sayısına bakar. 
+- Scalelite arkasındaki 10 adet farklı BBB sunucusunun CPU/RAM yüküne veya içindeki kişi sayısına bakar.
 - En boş olan (örneğin `bbb04.sirket.com`) sunucusuna istek API üzerinden yönlendirilir.
 - Odanın tamamı (Tüm giren öğrenciler dahil) `bbb04`'te yaşamını sürdürür.
-- İkinci bir öğretmen başka bir ders açtığında, Scalelite onu `bbb07`'ye atar. 
+- İkinci bir öğretmen başka bir ders açtığında, Scalelite onu `bbb07`'ye atar.
 
 > [!CAUTION]
 > Scalelite veya herhangi bir BBB Load Balancer, "tek bir odadaki 500 kişiyi 5 farklı sunucuya bölerek" taşımaz. Ölçeklendirme işlemi ODA/TOPLANTI (Meeting) bazındadır. Yani 10 odanız varsa her birini 1 sunucuya dağıtır. Tek odada devasa bir yayın (Örn: 2000 kişi) yapmak isterseniz webiner (Youtube Live/Rtmp) entegrasyonu gerekir.
@@ -25,8 +25,8 @@ Scalelite kurulumu için klasik BBB mimarisinden farklı bir topoloji gerekir:
 1. **Önyüz / LMS:** Moodle, Canvas, Greenlight vb. (Kullanıcı giriş ekranı)
 2. **Scalelite Sunucusu (veya Cluster'ı):** Nginx ve Ruby/Postgres tabanlı Docker ile çalışan LB.
 3. **Worker BBB'ler:** Çok sayıda (Örn: bbb01, bbb02, bbb03) arkada duran "İşçi" sunucular. (Bu sunucular dışarıdan IP tabanlı olarak direkt erişime kapalı olmasa da, kullanıcıların FQDN'ini bilmesine gerek yoktur).
-4. **Ortak Depolama (NFS Server veya AWS S3):** 
-   - Öğretmen bbb04'te ders anlattı ve ders kaydedildi diyelim. Öğretmen ertesi gün bbb01'e denk gelirse dünkü kaydını nasıl görecek? 
+4. **Ortak Depolama (NFS Server veya AWS S3):**
+   - Öğretmen bbb04'te ders anlattı ve ders kaydedildi diyelim. Öğretmen ertesi gün bbb01'e denk gelirse dünkü kaydını nasıl görecek?
    - Bütün worker BBB'ler kayıt bittiğinde MP4 / Presentation dosyalarını NFS (Ortak Ağ Sürücüsü) alanına kopyalar (`rsync` veya `scp` mantığıyla).
    - Kullanıcı Moodle'dan "Dünkü Dersi İzle" dediğinde, Scalelite o kaydı doğrudan NFS'nin üzerinden (Nginx alias ile) oynatır.
 
@@ -38,8 +38,22 @@ Eğer LMS (Moodle vb) kullanmıyor, sadece Greenlight kullanıyorsanız, Greenli
 
 LB dışında, elinizdeki tek sunucunun performansını optimize etmenin en iyi yolu kamera limitlerini kısıtlamaktır.
 
-`bbb-web` üzerinden `bigbluebutton.properties` yapılandırmasında bazı değerler CPU tasarrufu sağlar:
+> [!IMPORTANT]
+> `maxWebcams` parametresi `/etc/bigbluebutton/bigbluebutton.properties` dosyasında yer alır. Ancak `webcamsOnlyForModerator` gibi kayıt ve görüntüleme davranışı ayarları `/etc/bigbluebutton/bbb-html5.yml` dosyasında tanımlanmalıdır.
 
-- `maxWebcams` : Sistemde aynı anda sadece 5 kamera açılmasına izin verme. (Örn: `maxWebcams=5`)
-- `webcamsOnlyForModerator` : Eğer `true` ise, kimse kimsenin kamerasını göremez, herkes sadece öğretmeni görür.
-- `presentationBackgroundOnly`: Çizim tahtası optimizasyonu sağlar.
+**`bigbluebutton.properties` içinde (Backend — bbb-web):**
+
+- `maxWebcams=5` : Sistemde aynı anda en fazla 5 kamera açılmasına izin ver.
+
+Değişiklik sonrası: `sudo systemctl restart bbb-web`
+
+**`bbb-html5.yml` içinde (Frontend — bbb-html5):**
+
+```yaml
+public:
+  media:
+    # Sadece moderatörlerin kamerası görünsün, katılımcılar birbirini göremez
+    webcamsOnlyForModerator: true
+```
+
+Değişiklik sonrası: `sudo systemctl restart bbb-html5`
