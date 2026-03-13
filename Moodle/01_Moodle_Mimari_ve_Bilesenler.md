@@ -5,13 +5,12 @@ Moodle 5.0 ile gelen en önemli mimari değişiklik: **`/public` root dizini** k
 ## 1.1 Moodle 5.x Dizin Yapısı (Yeni Mimari)
 
 ```
-/var/www/moodle/           ← Uygulama kök dizini (web erişimi OLMAMALI)
-├── public/                ← Web root burası! (Nginx root → buraya işaret eder)
+/var/www/moodle/           ← Uygulama kök dizini (Burada admin/, lib/, mod/ vb. bulunur)
+├── public/                ← Web root! (Sadece index.php ve asset'ler buradadır)
 │   ├── index.php
-│   ├── admin/
-│   └── ...                ← Tüm Moodle PHP dosyaları burada
+│   └── ...                
 ├── moodledata/            ← Kullanıcı dosyaları (web dışında kalmalı)
-└── config.php             ← Kritik yapılandırma dosyası
+└── config.php             ← Kritik yapılandırma dosyası (Kök dizinde kalmalı)
 ```
 
 > [!IMPORTANT]
@@ -80,7 +79,7 @@ $CFG->dbuser    = 'moodleuser';
 $CFG->dbpass    = 'guclu_sifre';
 $CFG->wwwroot   = 'https://moodle.sirket.com';      // Zorunlu: HTTPS
 $CFG->dataroot  = '/var/www/moodle/moodledata';     // public/ DIŞINDA!
-$CFG->dirroot   = '/var/www/moodle/public';         // 5.x: public/ dizini
+$CFG->dirroot   = '/var/www/moodle';                // Kök dizin (admin/ vb. burada)
 $CFG->admin     = 'admin';
 ```
 

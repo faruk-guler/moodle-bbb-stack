@@ -7,8 +7,9 @@ Moodle'ın gücü devasa eklenti kütüphanesinden gelir. Ancak her eklenti pota
 Arayüz üzerinden (`Site Administration > Install plugins`) eklenti yüklemek her zaman risklidir: dosya izinleri `www-data`'ya ait olur, geri alma şansı yoktur. Doğru yöntem **Git** ile kendi dizinine çekmektir.
 
 ```bash
-# Eklenti dizin yapısı
-/var/www/moodle/public/
+# Eklenti dizin yapısı (Uygulama Kökü)
+/var/www/moodle/
+├── public/          # Sadece web girişleri
 ├── blocks/          # Blok eklentileri (dashboard widget'ları)
 ├── mod/             # Etkinlik modülleri (Quiz, Assignment vb.)
 ├── theme/           # Temalar
@@ -19,31 +20,31 @@ Arayüz üzerinden (`Site Administration > Install plugins`) eklenti yüklemek h
 
 ```bash
 # Git ile eklenti kurma örneği (Format Tiles)
-cd /var/www/moodle/public/course/format
+cd /var/www/moodle/course/format
 sudo git clone https://github.com/gjb2048/moodle-format_tiles.git tiles
-sudo chown -R root:www-data /var/www/moodle/public/course/format/tiles
-sudo chmod -R 755 /var/www/moodle/public/course/format/tiles
+sudo chown -R root:www-data /var/www/moodle/course/format/tiles
+sudo chmod -R 755 /var/www/moodle/course/format/tiles
 ```
 
 Ardından `Site Administration > Notifications` sayfasını ziyaret ederek DB şemasını güncelleyin.
 
 > [!NOTE]
-> Eklenti kurduktan sonra `public/admin/cli/upgrade.php` çalıştırabilirsiniz. Web arayüzüne gitmek zorunda değilsiniz.
+> Eklenti kurduktan sonra `admin/cli/upgrade.php` çalıştırabilirsiniz. Web arayüzüne gitmek zorunda değilsiniz.
 
 ```bash
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/upgrade.php --non-interactive
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/upgrade.php --non-interactive
 ```
 
 ## 9.2 Eklenti Güncelleme (Git Yöntemi)
 
 ```bash
 # Tüm eklentileri tek tek güncellemek yerine toplu güncelleme
-cd /var/www/moodle/public/course/format/tiles
+cd /var/www/moodle/course/format/tiles
 sudo git pull origin main
 
 # Veritabanı şemasını güncelle
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/upgrade.php --non-interactive
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/upgrade.php --non-interactive
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php
 ```
 
 ## 9.3 Atıl Eklentilerin Temizlenmesi
@@ -59,7 +60,7 @@ sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php
 
 ```bash
 # Disk'ten eklenti dizini sildikten sonra kalan DB kayıtlarını temizle
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/uninstall_plugins.php --plugins=mod_eskieklenti --run
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/uninstall_plugins.php --plugins=mod_eskieklenti --run
 ```
 
 ## 9.4 LTI (Learning Tools Interoperability)
@@ -89,7 +90,7 @@ LTI 1.3: Platform/Client IDs + RS256 Anahtar Çifti (Daha güvenli)
 # "Last released" kolonunu 1 yıldan eski olan eklentilerden uzak durun
 
 # Eklentinin desteklenen Moodle versiyonunu kontrol et
-cat /var/www/moodle/public/mod/eklentime/version.php | grep "requires"
+cat /var/www/moodle/mod/eklentime/version.php | grep "requires"
 ```
 
 ## 9.6 LDAP / Active Directory Kimlik Doğrulama Entegrasyonu

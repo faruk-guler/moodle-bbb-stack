@@ -29,8 +29,6 @@ Moodle yerleşik bir LDAP eklentisi ile gelir.
    * `First name` → `givenName`
    * `Surname` → `sn`
    * `Email address` → `mail`
-   * **Update local:** On Every Login (Her girişte AD'den bilgiyi çekip Moodle'ı günceller).
-
 ### 1.2 Greenlight v3 ve LDAP (ÖNEMLİ MİMARİ DEĞİŞİKLİĞİ)
 
 Greenlight v2 sürümünde doğrudan `.env` dosyasına LDAP parametreleri (`LDAP_SERVER`, `LDAP_UID` vb.) girilerek Active Directory bağlantısı yapılabiliyordu. Ancak **Greenlight v3 ile birlikte doğrudan LDAP desteği kaldırılmıştır**.
@@ -45,6 +43,19 @@ Bunun yerine, endüstri standardı olan **OpenID Connect (OIDC)** kullanımına 
 
 Bu kurulumun detayları, BBB dokümantasyonundaki ilgili "Greenlight v3 İleri Düzey Yönetim" bölümünde anlatılmıştır. Moodle kullanıyorsanız Greenlight'a ihtiyacınız yoktur; Moodle zaten doğrudan LDAP destekler.
 
+### 1.3 PILOS ve Doğrudan LDAP Desteği
+
+Greenlight v3'ün aksine **PILOS**, Active Directory (LDAP) bağlantısını **doğrudan** desteklemeye devam eder. Araya Keycloak gibi ek bir IdP kurma zorunluluğu yoktur.
+
+PILOS `.env` dosyasında şu parametrelerle LDAP aktif edilebilir:
+- `LDAP_ENABLED=true`
+- `LDAP_HOST=dc01.sirket.local`
+- `LDAP_BASE_DN="OU=Kullanicilar,DC=sirket,DC=local"`
+- `LDAP_USER_ATTRIBUTE=sAMAccountName`
+
+> [!NOTE]
+> PILOS, nitelik eşleştirme (mapping) ve Regex tabanlı rol atamaları için `.env` dışında gelişmiş bir **JSON yapılandırma** sistemi kullanır. Bu sayede LDAP gruplarını doğrudan PILOS rollerine otomatik olarak bağlayabilirsiniz. Detaylar için: [PILOS Bölüm 13 - JSON Mapping](file:///c:/Users/SISTEM/Downloads/Antigravity/BigBlueButton/13_PILOS_Alternatif_Arayuz.md#L230)
+
 ---
 
 ## 2. SAML2 Entegrasyonu (Modern Kurumsal Çözüm)
@@ -58,10 +69,10 @@ SAML2 mimarisinde kullanıcı şifresini asla Moodle'a girmez; Moodle, kullanıc
 Moodle çekirdeğinde SAML2 yoktur, popüler olan `auth_saml2` (Catalyst IT) eklentisini Git ile kurmalıyız:
 
 ```bash
-cd /var/www/moodle/public/auth
+cd /var/www/moodle/auth
 sudo git clone https://github.com/catalyst/moodle-auth_saml2.git saml2
 sudo chown -R root:www-data saml2
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/upgrade.php --non-interactive
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/upgrade.php --non-interactive
 ```
 
 ### 2.2 Entra ID (Azure AD) Tarafı — Enterprise Application
@@ -85,6 +96,12 @@ Moodle SAML2 ayarlarında **Data mapping** sekmesinde şu eşleştirmeleri yapı
 - **First name:** `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname`
 - **Surname:** `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`
 - **Email:** `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` (VEYA `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn`)
+
+### 2.5 PILOS ve SAML2
+
+PILOS da tıpkı LDAP gibi SAML2 protokolünü aracı bir IdP olmadan doğrudan destekler. Microsoft Entra ID veya Keycloak ile doğrudan `SAML_` ön ekli çevresel değişkenler (Env variables) kullanılarak eşleştirilebilir. Bu özellik, Greenlight v3'ün OIDC zorunluluğuna göre büyük bir esneklik avantajıdır.
+
+---
 
 Artık Moodle giriş sayfasında kullanıcı adı/şifre yerine "Microsoft ile Giriş Yap" şeklinde kurumsal bir buton olacaktır.
 

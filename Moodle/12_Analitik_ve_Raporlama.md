@@ -35,7 +35,7 @@ Site Administration > Analytics > Analytics models
 
 ```bash
 # Modelleri CLI ile eğit (büyük sistemlerde cron yerine manuel çalıştırın)
-sudo -u www-data php8.3 /var/www/moodle/public/admin/tool/analytics/cli/evaluate_model.php --modelid=1
+sudo -u www-data php8.3 /var/www/moodle/admin/tool/analytics/cli/evaluate_model.php --modelid=1
 ```
 
 ## 12.3 Özel SQL Raporları (Configurable Reports Eklentisi)

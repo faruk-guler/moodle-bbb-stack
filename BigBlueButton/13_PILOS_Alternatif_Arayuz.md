@@ -228,7 +228,62 @@ x-docker-pilos-common: &pilos-common
 
 ---
 
-## 8. BBB Sunucusu Bağlantısı
+## 8. İleri Düzey Kimlik Doğrulama ve JSON Mapping
+
+PILOS, LDAP veya SAML2 üzerinden gelen kullanıcıların rollerini ve niteliklerini (attributes) yönetmek için gelişmiş bir JSON tabanlı eşleştirme sistemi kullanır. Bu özellik, Greenlight v3'ün sahip olmadığı, doğrudan "Regex" (düzenli ifade) ile rol atama esnekliği sunar.
+
+### 8.1 Öznitelik ve Rol Eşleştirme (`auth.json`)
+
+PILOS kurulum dizininde veya yapılandırma panelinde tanımlanan bu JSON yapısı, dış kaynaklı kullanıcı bilgilerini PILOS içindeki rollere bağlar:
+
+```json
+{
+    "attributes": {
+        "external_id": "cn",
+        "first_name": "givenname",
+        "last_name": "sn",
+        "email": "mail",
+        "groups": "memberof"
+    },
+    "roles": [
+        {
+            "name": "user",
+            "disabled": false,
+            "rules": [
+                {
+                    "attribute": "external_id",
+                    "regex": "/^.*/i"
+                }
+            ]
+        },
+        {
+            "name": "superuser",
+            "disabled": false,
+            "all": true,
+            "rules": [
+                {
+                    "attribute": "email",
+                    "regex": "/@its\\.university\\.org$/i"
+                },
+                {
+                    "attribute": "groups",
+                    "regex": "/^cn=admin,ou=Groups,dc=university,dc=org$/im"
+                }
+            ]
+        }
+    ]
+}
+```
+
+### 8.2 Bu Yapı Ne Sağlar?
+
+1.  **Regex ile Dinamik Rol Atama:** Örneğin, sadece `@its.university.org` uzantılı e-postası olan kişileri veya LDAP'ta `admin` grubunda olanları otomatik olarak `superuser` (moderatör yetkili yönetici) yapabilirsiniz.
+2.  **Grup Bazlı Yetkilendirme:** LDAP üzerindeki `memberof` niteliğini okuyarak, üniversite hiyerarşisini doğrudan PILOS rollerine yansıtabilirsiniz.
+3.  **Esnek Eşleştirme:** LDAP'taki `cn` niteliğini PILOS'un `external_id` alanına bağlayarak benzersiz kimlik yönetimini garantilersiniz.
+
+---
+
+## 9. BBB Sunucusu Bağlantısı
 
 PILOS kurulumu tamamlandıktan sonra yönetici panelinden (Superuser ile giriş yaparak) BBB sunucunuzu eklemeniz gerekir:
 

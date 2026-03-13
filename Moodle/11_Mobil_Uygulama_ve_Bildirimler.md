@@ -27,7 +27,7 @@ $CFG->enablemobilewebservice = 1;
 curl -X GET "https://moodle.sirket.com/webservice/rest/server.php?wsfunction=core_webservice_get_site_info&wstoken=TOKEN&moodlewsrestformat=json"
 
 # Token üretimi (Admin CLI)
-sudo -u www-data php8.3 /var/www/moodle/public/admin/tool/mobile/launch.php \
+sudo -u www-data php8.3 /var/www/moodle/admin/tool/mobile/launch.php \
   --service=moodle_mobile_app \
   --username=kullanici_adi
 ```

@@ -12,7 +12,7 @@ sudo crontab -u www-data -e
 
 Satırı ekleyin:
 ```
-* * * * * /usr/bin/php8.3 /var/www/moodle/public/admin/cli/cron.php >/dev/null 2>&1
+* * * * * /usr/bin/php8.3 /var/www/moodle/admin/cli/cron.php >/dev/null 2>&1
 ```
 
 > [!IMPORTANT]
@@ -34,7 +34,7 @@ After=network.target
 [Service]
 Type=oneshot
 User=www-data
-ExecStart=/usr/bin/php8.3 /var/www/moodle/public/admin/cli/cron.php
+ExecStart=/usr/bin/php8.3 /var/www/moodle/admin/cli/cron.php
 StandardOutput=journal
 StandardError=journal
 ```
@@ -68,13 +68,13 @@ Modern Moodle sürümlerinde bazı işlemler (kurs yedekleme, bildirim gönderim
 
 ```bash
 # Kuyruktaki bekleyen görev sayısını öğren
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/adhoc_task.php --list
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/adhoc_task.php --list
 
 # Kuyruğu manuel olarak hemen çalıştır
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/adhoc_task.php --execute
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/adhoc_task.php --execute
 
 # Belirli bir görevi çalıştır (görev sınıf adıyla)
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/adhoc_task.php --classname="\core\task\backup_adhoc_task"
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/adhoc_task.php --classname="\core\task\backup_adhoc_task"
 ```
 
 ## 5.4 Cron Durumunu İzleme
@@ -83,7 +83,7 @@ sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/adhoc_task.php --classn
 
 ```bash
 # Son Cron çalışma zamanını CLI ile öğren
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/cron.php --help
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/cron.php --help
 
 # journalctl ile systemd timer loglarını incele
 sudo journalctl -u moodle-cron.service --since "1 hour ago"
@@ -105,7 +105,7 @@ Bazen bir görev (genellikle kurs yedekleme) yarıda kalırsa kilit (lock) bıra
 sudo -u postgres psql moodledb -c "DELETE FROM mdl_task_adhoc_lock;"
 
 # Ardından cache temizle ve Cron'u başlat
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php
 ```
 
 > [!WARNING]

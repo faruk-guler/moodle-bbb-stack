@@ -5,10 +5,12 @@ Moodle, öğrenci verilerini barındırdığı için saldırganlar için cazip b
 ## 6.1 Dosya İzinleri (Permission Hardening)
 
 ```bash
-# Moodle kod dizini: root sahipliği, www-data sadece okuma
-sudo chown -R root:www-data /var/www/moodle/public
-sudo find /var/www/moodle/public -type f -exec chmod 640 {} \;
-sudo find /var/www/moodle/public -type d -exec chmod 750 {} \;
+# Moodle kod dizini (Kök): root sahipliği, www-data sadece okuma
+sudo chown -R root:www-data /var/www/moodle
+sudo find /var/www/moodle -type f -exec chmod 640 {} \;
+sudo find /var/www/moodle -type d -exec chmod 750 {} \;
+# public dizinine Nginx erişimi için izin
+sudo chmod -R 755 /var/www/moodle/public
 
 # config.php en kısıtlı izinlerde olmalı (kod kökünde, public dışında)
 sudo chmod 640 /var/www/moodle/config.php
@@ -109,4 +111,4 @@ Buradaki **tüm kırmızı uyarıları yeşile çevirmek** bir sistem yöneticis
 ---
 
 > [!TIP]
-> `config.php` dosyasını asla Git reposuna pushlamayın. İçindeki `dbpass` ve `passwordsaltmain` değerlerini hiç kimseyle paylaşmayın. Şifreyi güncellemek gerekirse `public/admin/cli/reset_password.php` CLI aracını kullanın.
+> `config.php` dosyasını asla Git reposuna pushlamayın. İçindeki `dbpass` ve `passwordsaltmain` değerlerini hiç kimseyle paylaşmayın. Şifreyi güncellemek gerekirse `admin/cli/reset_password.php` CLI aracını kullanın.

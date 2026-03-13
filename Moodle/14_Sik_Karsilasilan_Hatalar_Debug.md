@@ -49,11 +49,11 @@ Tema bozuksa, eklenti yükledikten sonra site garip davranıyorsa veya çevirile
 
 ```bash
 # Tüm cache'leri temizle
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php
 
 # Sadece belirli cache türünü temizle
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php --type=theme
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php --type=lang
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php --type=theme
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php --type=lang
 ```
 
 ## 14.5 504 Gateway Timeout (PHP-FPM Timeout)
@@ -93,7 +93,7 @@ Veritabanında kayıtlı ancak `moodledata/filedir` içinde bulunmayan dosyalar 
 
 ```bash
 # Veritabanı şemasını ve dosya bütünlüğünü kontrol et
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/check_database_schema.php
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/check_database_schema.php
 
 # mdl_files tablosundaki "missing" dosyaları bul (PostgreSQL sorgusu)
 sudo -u postgres psql moodledb -c "

@@ -26,8 +26,10 @@ sudo mkdir -p /var/www/moodle/moodledata
 sudo chown -R www-data:www-data /var/www/moodle/moodledata
 sudo chmod -R 750 /var/www/moodle/moodledata
 
-# Moodle kod dizini: Web sunucusu okuyabilmeli, yazamamalı
-sudo chown -R root:www-data /var/www/moodle/public
+# Moodle kod dizini (Kök): Web sunucusu okuyabilmeli, yazamamalı
+sudo chown -R root:www-data /var/www/moodle
+sudo chmod -R 755 /var/www/moodle
+# public ve admin/cli dizinlerine erişim
 sudo chmod -R 755 /var/www/moodle/public
 # İstisna: config.php daha kısıtlı olmalı
 sudo chmod 640 /var/www/moodle/config.php
@@ -53,7 +55,7 @@ Aynı dosya başka derse yüklenirse → Disk'e yeniden yazılmaz, sadece DB kay
 Bu sistem disk kullanımını önemli ölçüde azaltır ancak bir dezavantajı vardır:
 
 > [!NOTE]
-> Bir dosyayı sildiğinizde `filedir` dizinindeki gerçek dosya hemen silinmez; 30 gün `trashdir`'de bekler. Disk doluysa `sudo -u www-data php /var/www/moodle/public/admin/cli/purge_caches.php` ile zararsız geçici dosyaları temizleyebilirsiniz.
+> Bir dosyayı sildiğinizde `filedir` dizinindeki gerçek dosya hemen silinmez; 30 gün `trashdir`'de bekler. Disk doluysa `sudo -u www-data php /var/www/moodle/admin/cli/purge_caches.php` ile zararsız geçici dosyaları temizleyebilirsiniz.
 
 ## 4.4 config.php ile File Storage Yönetimi
 
@@ -92,14 +94,14 @@ Veritabanı yedeği tek başına işe yaramaz. `moodledata` ve veritabanı yede�
 
 ```bash
 # 1. Bakım modunu aç
-sudo -u www-data php /var/www/moodle/public/admin/cli/maintenance.php --enable
+sudo -u www-data php /var/www/moodle/admin/cli/maintenance.php --enable
 
 # 2. Eşzamanlı yedek al
 pg_dump -U moodleuser moodledb | gzip > /backup/moodle-db-$(date +%F).sql.gz
 tar -czf /backup/moodledata-$(date +%F).tar.gz /var/www/moodle/moodledata/
 
 # 3. Bakım modunu kapat
-sudo -u www-data php /var/www/moodle/public/admin/cli/maintenance.php --disable
+sudo -u www-data php /var/www/moodle/admin/cli/maintenance.php --disable
 ```
 
 ---

@@ -29,6 +29,15 @@ Moodle ve BigBlueButton birlikte çalıştığında onlarca farklı servisin log
 | Redis | `/var/log/redis/redis-server.log` | Pub/Sub mesaj kuyruğu |
 | Kayıt İşleme | `/var/log/bigbluebutton/bbb-rap-worker.log` | Recording pipeline hataları |
 
+### PILOS Tarafı (Opsiyonel Ön Yüz)
+
+| Servis | Log Konumu | İçerik |
+| :--- | :--- | :--- |
+| PILOS App | `docker logs pilos_app` | Laravel / Uygulama hataları |
+| PILOS DB | `docker logs pilos_db` | PostgreSQL / MariaDB logları |
+| PILOS Nginx | `docker logs pilos_nginx` | HTTP istekleri ve hataları |
+| Dosya Logları | `./storage/logs/*.log` | Uygulama bazlı günlük dosyalar |
+
 ---
 
 ## 2. Strateji 1: Loki + Grafana (Hafif ve Modern)
@@ -238,6 +247,15 @@ scrape_configs:
           job: bbb
           service: recording
           __path__: /var/log/bigbluebutton/bbb-rap-worker.log
+
+  # PILOS Logları (Docker üzerinden dosya olarak map edilmişse)
+  - job_name: pilos
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: pilos
+          service: app
+          __path__: /opt/pilos/storage/logs/*.log
 ```
 
 ### 2.4 Promtail Systemd Servisi

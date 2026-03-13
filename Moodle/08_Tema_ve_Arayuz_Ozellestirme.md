@@ -8,10 +8,10 @@ Moodle'ın varsayılan teması olan **Boost** üzerinde doğrudan değişiklik y
 
 ```bash
 # Child theme dizinini oluşturun
-sudo mkdir -p /var/www/moodle/public/theme/kurumtema
+sudo mkdir -p /var/www/moodle/theme/kurumtema
 
 # Zorunlu dosyaları oluşturun
-sudo nano /var/www/moodle/public/theme/kurumtema/config.php
+sudo nano /var/www/moodle/theme/kurumtema/config.php
 ```
 
 ```php
@@ -32,8 +32,8 @@ $THEME->scss = function($theme) {
 
 ```bash
 # SCSS özelleştirme dosyası
-sudo mkdir -p /var/www/moodle/public/theme/kurumtema/scss
-sudo nano /var/www/moodle/public/theme/kurumtema/scss/kurumtema.scss
+sudo mkdir -p /var/www/moodle/theme/kurumtema/scss
+sudo nano /var/www/moodle/theme/kurumtema/scss/kurumtema.scss
 ```
 
 ```scss
@@ -51,10 +51,10 @@ $navbar-header-color: #ffffff;
 
 ```bash
 # Tema cache'ini temizle (tema değişikliğinden sonra zorunlu)
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php
 
 # Sadece tema önbelleğini temizle
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/purge_caches.php --type=theme
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/purge_caches.php --type=theme
 ```
 
 > [!WARNING]
@@ -91,11 +91,12 @@ Tüm tema altyapısını değiştirmek yerine sadece kurumsal renkleri uygulamak
 
 ```bash
 # Türkçe dil paketini CLI ile yükle
-sudo -u www-data php8.3 /var/www/moodle/public/admin/tool/langimport/cli/langimport.php --lang=tr
+sudo -u www-data php8.3 /var/www/moodle/admin/tool/langimport/cli/langimport.php --lang=tr
 ```
 
 > [!NOTE]
 > Arayüzden (GUI) tema veya eklenti yükleme adımları:
+>
 > 1. `Site Yönetimi > Eklentiler > Eklenti yükle` menüsüne gidin.
 > 2. Hazırladığınız veya indirdiğiniz tema/eklenti dosyasını (`.zip`) yükleyin.
 > 3. Temayı aktif etmek için: `Site Yönetimi > Görünüm > Temalar > Tema seçici` yolunu izleyip aktif edin.
@@ -108,7 +109,7 @@ Yaptığınız değişiklikler `moodledata/lang/tr_local/` altına kaydedilir ve
 
 ## 8.5 Logo ve Favicon Yönetimi
 
-```
+```text
 Site Administration > Appearance > Logos
 ```
 

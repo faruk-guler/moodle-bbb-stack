@@ -13,10 +13,10 @@ Site Administration > Plugins > Activity Modules > BigBlueButton
 Eğer yoksa veya eski bir sürüm ise:
 
 ```bash
-cd /var/www/moodle/public/mod
+cd /var/www/moodle/mod
 sudo git clone https://github.com/blindsidenetworks/moodle-mod_bigbluebuttonbn.git bigbluebuttonbn
-sudo chown -R root:www-data /var/www/moodle/public/mod/bigbluebuttonbn
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/upgrade.php --non-interactive
+sudo chown -R root:www-data /var/www/moodle/mod/bigbluebuttonbn
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/upgrade.php --non-interactive
 ```
 
 ## 13.2 API Konfigürasyonu
@@ -54,7 +54,7 @@ BBB üzerinde yapılan kayıtların Moodle dersleri içinde görünmesi için:
 
 1. BBB sunucusunda kayıtların tamamlanmış ve `published` (yayımlanmış) durumda olması gerekir.
 2. Moodle Cron'u çalışıyor olmalıdır — Cron her çalıştığında BBB API'sini sorgular.
-3. Kayıt listesi Moodle'da hemen görünmüyorsa: `sudo -u www-data php8.3 public/admin/cli/cron.php`
+3. Kayıt listesi Moodle'da hemen görünmüyorsa: `sudo -u www-data php8.3 admin/cli/cron.php`
 
 ```bash
 # BBB'de kayıt durumlarını kontrol et

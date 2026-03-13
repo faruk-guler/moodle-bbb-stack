@@ -31,7 +31,7 @@ BACKUP_DIR="/backup/moodle"
 DATE=$(date +%Y-%m-%d_%H-%M)
 DB_NAME="moodledb"
 DB_USER="moodleuser"
-MOODLE_ROOT="/var/www/moodle/public"   # Moodle 5.x: /public alt dizini
+MOODLE_ROOT="/var/www/moodle"          # Moodle uygulama dizini
 DATA_ROOT="/var/www/moodle/moodledata"  # /public dışında
 KEEP_DAYS=7
 
@@ -77,10 +77,10 @@ echo "0 2 * * * root /usr/local/bin/moodle-backup.sh >> /var/log/moodle-backup.l
 
 ```bash
 # 1. Mevcut Moodle sürümünü kontrol et
-cat /var/www/moodle/public/version.php | grep "\$version" | head -1
+cat /var/www/moodle/version.php | grep "\$version" | head -1
 
 # 2. Bakım modunu aç
-sudo -u www-data php8.3 /var/www/moodle/public/admin/cli/maintenance.php --enable
+sudo -u www-data php8.3 /var/www/moodle/admin/cli/maintenance.php --enable
 
 # 3. Git ile yeni sürüme geç
 cd /var/www/moodle
@@ -88,23 +88,23 @@ sudo git fetch origin
 sudo git checkout MOODLE_51_STABLE    # Güncel 5.1 LTS dalı
 
 # 4. Cache'i temizle
-sudo -u www-data php8.3 public/admin/cli/purge_caches.php
+sudo -u www-data php8.3 admin/cli/purge_caches.php
 
 # 5. Veritabanı şemasını güncelle
-sudo -u www-data php8.3 public/admin/cli/upgrade.php --non-interactive
+sudo -u www-data php8.3 admin/cli/upgrade.php --non-interactive
 
 # 6. Bakım modunu kapat
-sudo -u www-data php8.3 public/admin/cli/maintenance.php --disable
+sudo -u www-data php8.3 admin/cli/maintenance.php --disable
 ```
 
 ## 7.4 Yükseltme Sonrası Doğrulama
 
 ```bash
 # Tüm eklentilerin güncel olduğunu kontrol et
-sudo -u www-data php8.3 public/admin/cli/upgrade.php --non-interactive
+sudo -u www-data php8.3 admin/cli/upgrade.php --non-interactive
 
 # Yeni sürüm numarasını doğrula
-cat /var/www/moodle/public/version.php | grep "\$release"
+cat /var/www/moodle/version.php | grep "\$release"
 
 # Site yönetim panelinde bildirim varsa
 # Site Administration > Notifications sayfasını ziyaret edin
@@ -119,11 +119,11 @@ sudo git log --oneline -5                     # Eski commit hash'ini bul
 sudo git checkout <eski_commit_hash>
 
 # 2. Veritabanını yedekten geri yükle
-sudo -u www-data php8.3 public/admin/cli/maintenance.php --enable
+sudo -u www-data php8.3 admin/cli/maintenance.php --enable
 gunzip -c /backup/moodle/2026-03-01_02-00/moodle-db.sql.gz | PGPASSWORD="sifre" psql -U moodleuser moodledb
 
 # 3. moodledata'yı yedekten geri yükle (gerekirse)
-sudo -u www-data php8.3 public/admin/cli/maintenance.php --disable
+sudo -u www-data php8.3 admin/cli/maintenance.php --disable
 ```
 
 ---

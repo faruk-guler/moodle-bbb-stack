@@ -162,13 +162,15 @@ GRANT ALL PRIVILEGES ON DATABASE moodledb TO moodleuser;
 cd /var/www
 sudo git clone -b MOODLE_51_STABLE git://git.moodle.org/moodle.git moodle
 
-# moodledata dizinini /public dışına oluştur
-sudo mkdir -p /var/www/moodle/moodledata
-sudo chown -R www-data:www-data /var/www/moodle/moodledata
-sudo chmod -R 750 /var/www/moodle/moodledata
+# moodledata dizinini /var/www/moodle dışında oluşturmak daha güvenlidir
+sudo mkdir -p /var/www/moodle-data
+sudo chown -R www-data:www-data /var/www/moodle-data
+sudo chmod -R 750 /var/www/moodle-data
 
-# Moodle kodu root:www-data sahipliğinde olmalı
-sudo chown -R root:www-data /var/www/moodle/public
+# Moodle kodu root:www-data sahipliğinde olmalı (Kök dizin)
+sudo chown -R root:www-data /var/www/moodle
+sudo chmod -R 755 /var/www/moodle
+# public alt dizinine Nginx erişimi için izin ver
 sudo chmod -R 755 /var/www/moodle/public
 sudo chmod 640 /var/www/moodle/config.php
 
