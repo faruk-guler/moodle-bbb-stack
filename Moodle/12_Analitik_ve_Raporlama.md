@@ -6,7 +6,7 @@ Moodle sadece veri toplamaz; bu verileri kullanarak "risk altındaki öğrencile
 
 Moodle'da her kullanıcı eylemi (sayfa görüntüleme, dosya yükleme, sınav girişi) varsayılan olarak **Standard Log** tablosuna yazılır.
 
-```
+```text
 Site Administration > Plugins > Logging > Manage log stores
 ```
 
@@ -23,7 +23,7 @@ Site Administration > Plugins > Logging > Manage log stores
 
 Moodle 3.4+ sürümünden itibaren yerleşik makine öğrenmesi modelleri bulunmaktadır.
 
-```
+```text
 Site Administration > Analytics > Analytics models
 ```
 
@@ -40,7 +40,7 @@ sudo -u www-data php8.3 /var/www/moodle/admin/tool/analytics/cli/evaluate_model.
 
 ## 12.3 Özel SQL Raporları (Configurable Reports Eklentisi)
 
-```
+```text
 Site Administration > Plugins > Add-ons > Configurable Reports
 ```
 
@@ -78,7 +78,7 @@ ORDER BY tamamlanma_oran DESC;
 
 ## 12.4 Dashboard Yönetimi
 
-```
+```text
 Site Administration > Appearance > Default Dashboard page
 ```
 

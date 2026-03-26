@@ -74,7 +74,7 @@ Moodle'ın dış dünyayla konuşma standartıdır (Örn: bir yayınevinin inter
 3. **Tool URL:** Harici içerik sağlayıcının LTI URL'si
 4. **Consumer key / Secret:** LTI 1.1 için; LTI 1.3'te bunların yerine **RSA anahtar çifti** kullanılır
 
-```
+```text
 LTI 1.1: Shared Key + Secret (Daha eski, basit)
 LTI 1.3: Platform/Client IDs + RS256 Anahtar Çifti (Daha güvenli)
 ```
@@ -100,27 +100,29 @@ Moodle'ın yerleşik LDAP eklentisi (`auth_ldap`), kurumsal ortamlarda kullanıc
 **LDAPS Sunucu Ayarları:**
 `Site Administration > Plugins > Authentication > LDAP server` adımından eklentiyi aktifleştirin:
 
-*   **Host URL:** `ldaps://10.5.25.19;ldaps://10.5.25.20` (Yedekli mimari)
-*   **Version:** `3`
-*   **TLS Kullan:** `Hayır` (LDAPS kullanıldığı için)
+* **Host URL:** `ldaps://10.5.25.19;ldaps://10.5.25.20` (Yedekli mimari)
+* **Version:** `3`
+* **TLS Kullan:** `Hayır` (LDAPS kullanıldığı için)
 
 > [!NOTE]
 > Active Directory üzerinde Self-Signed bir sertifika kullanılıyorsa, Moodle sunucusunda sertifika reddini önlemek için `echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf` komutunu çalıştırıp web sunucunuzu yeniden başlatmanız gerekir.
 
 **Bağlantı ve Context Ayarları:**
-*   **Distinguished Name (DN):** `CN=moodlelogin,OU=TestUser,DC=guler,DC=com`
-*   **Bağlantı Şifresi:** `*****`
-*   **Contexts:** `OU=Bilgi_Islem,OU=PersonIT,OU=Person,DC=guler,DC=com`
-*   **User attribute:** `sAMAccountName` (Kullanıcı adı login için)
+
+* **Distinguished Name (DN):** `CN=moodlelogin,OU=TestUser,DC=guler,DC=com`
+* **Bağlantı Şifresi:** `*****`
+* **Contexts:** `OU=Bilgi_Islem,OU=PersonIT,OU=Person,DC=guler,DC=com`
+* **User attribute:** `sAMAccountName` (Kullanıcı adı login için)
 
 **Veri Haritalama (Data Mapping):**
 Kullanıcı profil bilgilerinin her girişte AD'den güncellenmesi için:
-*   Adı (`firstname`): `givenName` -> **Her girişte güncelle**, **Kilitli**
-*   Soyadı (`lastname`): `sn` -> **Her girişte güncelle**, **Kilitli**
-*   E-posta (`email`): `mail` -> **Her girişte güncelle**
-*   Askıdaki öznitelik (Status): `userAccountControl`
+
+* Adı (`firstname`): `givenName` -> **Her girişte güncelle**, **Kilitli**
+* Soyadı (`lastname`): `sn` -> **Her girişte güncelle**, **Kilitli**
+* E-posta (`email`): `mail` -> **Her girişte güncelle**
+* Askıdaki öznitelik (Status): `userAccountControl`
 
 ---
 
 > [!WARNING]
-> Moodle Plugin Directory'de onaylanmamış, 2 yıldan uzun süredir güncellenmemiş eklentileri kurumsal ortamda kullanmayın. Her eklentinin kaynak kodunu incelemeniz veya en azından GitHub Issues sekmesini takip etmeniz önerilir.
+> Moodle Plugin Directory'de onaylanmamış, 2 yıldan uzun süredir güncellenmemiş eklenti kullanmayın. Her eklentinin kaynak kodunu incelemeniz veya en azından GitHub Issues sekmesini takip etmeniz önerilir.

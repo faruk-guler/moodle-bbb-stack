@@ -24,8 +24,7 @@ openssl x509 -in bbb.sirket.com.crt -text -noout
 # 4. Sertifikayı sunucuya tanıtın
 sudo cp bbb.sirket.com.crt /usr/local/share/ca-certificates/bbb.sirket.com.crt
 sudo update-ca-certificates
-```
-
+```text
 ## En İyi Pratik
 
 Production ortamında gerçek özel anahtarları (`*.key`) hiçbir zaman Git reposuna göndermeyin.

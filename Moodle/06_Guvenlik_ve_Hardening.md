@@ -65,6 +65,7 @@ sudo ufw status verbose
 
 > [!NOTE]
 > Yönetim (Admin) paneline erişimi belirli IP adresleriyle kısıtlamak için Nginx seviyesinde ek bir koruma katmanı ekleyebilirsiniz:
+>
 > ```nginx
 > location /admin {
 >     allow 192.168.1.0/24;
@@ -93,7 +94,7 @@ $CFG->smtpsecure = 'tls';
 
 ## 6.5 Moodle Yerleşik Güvenlik Denetimi
 
-```
+```text
 Site Administration > Reports > Security checks
 ```
 

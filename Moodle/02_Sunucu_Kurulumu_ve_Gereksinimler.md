@@ -182,15 +182,18 @@ Kurulumu tamamlamak için tarayıcıdan `https://moodle.sirket.com/install.php` 
 
 > [!NOTE]
 > Moodle kurulum sihirbazını GUI üzerinden bitirdiğinizde **Varsayılan Admin Hesabı** tanımlaması istenir. Geleneksel yapıda aşağıdaki gibi standart oluşturulabilir:
-> *   **Kullanıcı Adı:** `admin`
-> *   **Şifre:** `Pass3556++!!` (veya sizin belirlediğiniz güçlü bir şifre)
-> *   **Site Adı:** `GULER Uzaktan Eğitim Sistemi`
+>
+> * **Kullanıcı Adı:** `admin`
+> * **Şifre:** `Pass3556++!!` (veya sizin belirlediğiniz güçlü bir şifre)
+> * **Site Adı:** `GULER Uzaktan Eğitim Sistemi`
 
 ### 2.9 Varsayılan Portlar ve Erişim
+
 Kurumsal Firewall kuralları için aşağıdaki portların açık olduğundan emin olun:
-*   **HTTP/HTTPS:** 80, 443
-*   **PostgreSQL:** 5432
-*   **Redis:** 6379
+
+* **HTTP/HTTPS:** 80, 443
+* **PostgreSQL:** 5432
+* **Redis:** 6379
 
 ---
 

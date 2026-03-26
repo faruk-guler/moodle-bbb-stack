@@ -11,7 +11,8 @@ sudo crontab -u www-data -e
 ```
 
 Satırı ekleyin:
-```
+
+```bash
 * * * * * /usr/bin/php8.3 /var/www/moodle/admin/cli/cron.php >/dev/null 2>&1
 ```
 
@@ -117,18 +118,19 @@ Cron'un başarıyla çalışmasıyla beraber forum bildirimlerinin ve şifre sı
 
 `Site Administration > Server > Email > Outgoing mail configuration` yolunu izleyin:
 
-*   **SMTP hosts:** `mail.kurum.local` (Exchange sunucu IP veya hostname)
-*   **SMTP port:** `587` (TLS) veya `25` (Güvenlik Yok)
-*   **SMTP Güvenlik:** `TLS` (587 için) veya `Yok` (25 için)
-*   **SMTP kullanıcı:** `moodle@kurum.com`
-*   **Gönderen adresi / adı:** `moodle@kurum.com` / `Moodle`
+* **SMTP hosts:** `mail.kurum.local` (Exchange sunucu IP veya hostname)
+* **SMTP port:** `587` (TLS) veya `25` (Güvenlik Yok)
+* **SMTP Güvenlik:** `TLS` (587 için) veya `Yok` (25 için)
+* **SMTP kullanıcı:** `moodle@kurum.com`
+* **Gönderen adresi / adı:** `moodle@kurum.com` / `Moodle`
 
 **Bilinmesi Gereken Kurumsal Exchange Kuralları:**
-1.  **Relay İzni:** Moodle sunucusunun IP adresine Exchange sunucusu üzerinde mutlaka Relay (Aktarım) izni verilmelidir, aksi takdirde mailler kabul edilmez.
-2.  **Firewall İzni:** Kurum ağındaki Firewall üzerinde 25 veya 587 portlarının Moodle sunucusundan Mail sunucusuna doğru açık olduğundan emin olun.
+
+1. **Relay İzni:** Moodle sunucusunun IP adresine Exchange sunucusu üzerinde mutlaka Relay (Aktarım) izni verilmelidir, aksi takdirde mailler kabul edilmez.
+2. **Firewall İzni:** Kurum ağındaki Firewall üzerinde 25 veya 587 portlarının Moodle sunucusundan Mail sunucusuna doğru açık olduğundan emin olun.
 
 > [!NOTE]
-> E-postaların spama düşmemesi için gereken SPF, DKIM ve DMARC kayıtlarının detayları için [E-posta Altyapısı ve DMARC](file:///c:/Users/SISTEM/Downloads/Antigravity/Altyapi_ve_Entegrasyonlar/02_Eposta_Altyapisi_ve_DMARC.md) rehberine bakın.
+> E-postaların spama düşmemesi için gereken SPF, DKIM ve DMARC kayıtlarının detayları için [E-posta Altyapısı ve DMARC](../Altyapi_ve_Entegrasyonlar/02_Eposta_Altyapisi_ve_DMARC.md) rehberine bakın.
 
 ---
 

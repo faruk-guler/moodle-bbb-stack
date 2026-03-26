@@ -4,7 +4,7 @@ Moodle 5.0 ile gelen en önemli mimari değişiklik: **`/public` root dizini** k
 
 ## 1.1 Moodle 5.x Dizin Yapısı (Yeni Mimari)
 
-```
+```text
 /var/www/moodle/           ← Uygulama kök dizini (Burada admin/, lib/, mod/ vb. bulunur)
 ├── public/                ← Web root! (Sadece index.php ve asset'ler buradadır)
 │   ├── index.php

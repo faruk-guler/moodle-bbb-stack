@@ -5,7 +5,7 @@ Mart 2026 itibarıyla **BigBlueButton 3.0.22** kararlı (stable) sürümdür. Gr
 > [!IMPORTANT]
 > BBB 3.0.x yalnızca **Ubuntu 22.04 LTS** üzerinde resmi olarak desteklenmektedir. Ubuntu 24.04 desteği BBB 4.0 ile planlanmaktadır (2027 hedefi).
 
-## 14.1 3.0 Serisinin Temel Mimari Değişimleri
+## 15.1 3.0 Serisinin Temel Mimari Değişimleri
 
 | Değişiklik | BBB 2.x | BBB 3.x |
 | :--- | :--- | :--- |
@@ -15,7 +15,7 @@ Mart 2026 itibarıyla **BigBlueButton 3.0.22** kararlı (stable) sürümdür. Gr
 | Greenlight | v2 (Rails) | **v3 (React + PostgreSQL)** |
 | MongoDB Rolü | Gerekli | Hâlâ gerekli (aktif toplantı durumu) |
 
-## 14.2 Yeni TLDraw Beyaz Tahta
+## 15.2 Yeni TLDraw Beyaz Tahta
 
 BBB 3.0 ile birlikte modern **TLDraw** altyapısına geçilmiştir:
 
@@ -23,7 +23,7 @@ BBB 3.0 ile birlikte modern **TLDraw** altyapısına geçilmiştir:
 - **Gelişmiş Araçlar:** Yapışkan notlar, akıllı oklar, pürüzsüz serbest çizim
 - **Daha Az Bant Genişliği:** Olaylar NodeJS ve Redis üzerinden optimize edilmiş paketlerle iletilir
 
-## 14.3 Plugin Architecture (BBB 3.0 Yeniliği)
+## 15.3 Plugin Architecture (BBB 3.0 Yeniliği)
 
 BBB 3.0'ın öne çıkan özelliği: **sunucu tarafında değişiklik yapmadan** yeni özellikler eklenebilen bir eklenti mimarisi.
 
@@ -35,7 +35,7 @@ ls /etc/bigbluebutton/bbb-html5-with-plugin-support/
 # https://github.com/bigbluebutton/bigbluebutton/tree/v3.0.x-release/bbb-plugin-sdk
 ```
 
-## 14.4 Greenlight 3.5 Yenilikleri
+## 15.4 Greenlight 3.5 Yenilikleri
 
 ```bash
 # Greenlight Docker image sürümünü kontrol et
@@ -59,19 +59,19 @@ Greenlight 3.5 ile gelen yenilikler:
 - Gelişmiş oda ayarları (katılımcı limiti, bekleme odası zorunluluğu)
 - OIDC (OpenID Connect) desteği geliştirildi
 
-## 14.5 Kamera ve Sanal Arka Plan
+## 15.5 Kamera ve Sanal Arka Plan
 
 - **Sanal Arka Plan:** Kamera flulaştırma ve özel arka plan ekleme **istemci tarafında** (Client-Side) işlenir — sunucuya ekstra CPU yükü binmez
 - **SysAdmin Notu:** Kurumsal arka plan görsellerini `/var/www/bigbluebutton-default/backgrounds/` dizinine ekleyerek kullanıcı panelinde otomatik sunabilirsiniz
 
-## 14.6 Moderatör Araçları (3.0 Geliştirmeleri)
+## 15.6 Moderatör Araçları (3.0 Geliştirmeleri)
 
 - **Dikkat Takibi:** BBB sekmesinden uzaklaşan kullanıcılar moderatöre görünür
 - **Toplu Yönetim:** Breakout odalarından ana odaya tek komutla geri çekme
 - **Hard-Mute:** Tüm mikrofonları anında kapatma
 - **API Tepki Süreleri:** Milisaniye seviyesine indirilmiştir
 
-## 14.7 Ubuntu 22.04 Standartları
+## 15.7 Ubuntu 22.04 Standartları
 
 ```bash
 # BBB 3.0 için sistem kontrolü

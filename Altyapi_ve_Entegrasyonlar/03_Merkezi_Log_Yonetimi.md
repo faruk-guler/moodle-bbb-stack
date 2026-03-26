@@ -12,7 +12,7 @@ Moodle ve BigBlueButton birlikte çalıştığında onlarca farklı servisin log
 | Nginx hata | `/var/log/nginx/error.log` | 502, 404, izin hataları |
 | PHP-FPM | `/var/log/php-fpm/moodle-error.log` | PHP fatal, memory, timeout |
 | PostgreSQL | `/var/log/postgresql/postgresql-16-main.log` | Slow query, deadlock |
-| Redis | `/var/log/redis/redis-server.log` | Bağlantı, bellek uyarıları |
+| Redis | `/var/log/redis/redis-server.log` | Bağlantı, bellek uyariesleri |
 | Moodle Cron | `journalctl -u moodle-cron` | Cron çıktıları ve hataları |
 | Moodle Uygulama | `Admin > Reports > Live logs` | Kullanıcı eylemleri (DB) |
 
@@ -46,7 +46,7 @@ Loki, Grafana Labs'ın geliştirdiği **log toplama** aracıdır. Elasticsearch'
 
 ### 2.1 Mimari
 
-```
+```text
 ┌─────────────────┐     ┌─────────────────┐
 │   Moodle Srv.   │     │   BBB Srv.      │
 │  (Promtail)     │     │  (Promtail)     │
@@ -296,7 +296,7 @@ ELK (Elasticsearch + Logstash + Kibana) daha güçlü arama ve tam metin indeksl
 
 ### 3.1 Filebeat Kurulumu (Her Sunucuda)
 
-Filebeat, Logstash/Elasticsearch'e log gönderen hafif göndericidır (shipper).
+Filebeat, Logstash/Elasticsearch'e log gönderen hafif bir göndericidir (shipper).
 
 ```bash
 # Elastic repo ekle ve Filebeat kur
@@ -364,7 +364,7 @@ Merkezi log sistemine sahip olmak yetmez — hatalar anında bildirilmelidir.
 
 ### 4.2 Grafana'da Alarm Oluşturma
 
-```
+```text
 Grafana > Alerting > Alert rules > New alert rule
 ```
 
@@ -385,7 +385,7 @@ Loglar kontrol edilmezse disk dolar ve sistem çöker. Her iki platform için de
 sudo nano /etc/logrotate.d/moodle
 ```
 
-```
+```text
 /var/log/php-fpm/moodle-error.log
 /var/log/nginx/access.log
 /var/log/nginx/error.log
@@ -411,7 +411,7 @@ sudo nano /etc/logrotate.d/moodle
 sudo nano /etc/logrotate.d/bbb-custom
 ```
 
-```
+```text
 /var/log/bigbluebutton/*.log
 /var/log/bbb-html5/*.log
 /var/log/bbb-webrtc-sfu/*.log

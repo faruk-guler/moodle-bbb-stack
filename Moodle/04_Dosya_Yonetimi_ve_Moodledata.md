@@ -4,7 +4,7 @@ Moodle'da dosyalar veritabanında değil, `moodledata` adını verdiğimiz fizik
 
 ## 4.1 Klasör Yapısı ve izin Hiyerarşisi
 
-```
+```text
 /var/www/moodle/moodledata/
 ├── filedir/        → İçerik hash'leriyle saklanan gerçek dosyalar
 │   ├── 00/
@@ -42,7 +42,7 @@ sudo chmod 640 /var/www/moodle/config.php
 
 Moodle, dosyaları SHA1 içerik hash'iyle saklar:
 
-```
+```text
 Kullanıcı "ozet.pdf" yükledi
   ↓
 SHA1 hash hesaplandı: a94f3ba1c12...
@@ -77,12 +77,12 @@ $CFG->xsendfilealiases = ['/dataroot/' => '/var/www/moodle/moodledata/'];
 du -sh /var/www/moodle/moodledata/
 
 # Alt dizin bazında analiz
-du -sh /var/www/moodle/moodledata/filedir/
-du -sh /var/www/moodle/moodledata/cache/
-du -sh /var/www/moodle/moodledata/localcache/
+du -sh /var/www/moodle/moodle-data/filedir/
+du -sh /var/www/moodle/moodle-data/cache/
+du -sh /var/www/moodle/moodle-data/localcache/
 
 # Temizlenebilir alan (cache ve temp dizinleri)
-du -sh /var/www/moodle/moodledata/temp/ /var/www/moodle/moodledata/cache/ /var/www/moodle/moodledata/localcache/
+du -sh /var/www/moodle/moodle-data/temp/ /var/www/moodle/moodle-data/cache/ /var/www/moodle/moodle-data/localcache/
 ```
 
 ## 4.6 Yedekleme Stratejisi
@@ -90,7 +90,7 @@ du -sh /var/www/moodle/moodledata/temp/ /var/www/moodle/moodledata/cache/ /var/w
 Veritabanı yedeği tek başına işe yaramaz. `moodledata` ve veritabanı yedeğinin **aynı anda** alınması gerekir; birisi diğerinden eski olursa "Missing file" hataları ortaya çıkar.
 
 > [!IMPORTANT]
-> Yedek alırken site **bakım moduna** (maintenance mode) alınmalıdır. Aksi takdirde yedek esnasında yeni yüklenen dosyalar DB'ye kayıt düşer ama `moodledata`'ya yazılmamış olabilir.
+> Yedek alırken site **bakım moduna** (maintenance mode) alınmalıdır. Aksi takdirde yedek esnasında yeni yüklenen dosyalar DB'ye kayıt düşer ale `moodledata`'ya yazılmamış olabilir.
 
 ```bash
 # 1. Bakım modunu aç
@@ -103,8 +103,3 @@ tar -czf /backup/moodledata-$(date +%F).tar.gz /var/www/moodle/moodledata/
 # 3. Bakım modunu kapat
 sudo -u www-data php /var/www/moodle/admin/cli/maintenance.php --disable
 ```
-
----
-
-> [!TIP]
-> Nginx `X-Accel-Redirect` ile dosya dağıtımını Nginx'e devredin. Bu sayede PHP-FPM süreçleri büyük dosya indirmelerinde meşgul kalmaz ve diğer isteklere hizmet verebilir.

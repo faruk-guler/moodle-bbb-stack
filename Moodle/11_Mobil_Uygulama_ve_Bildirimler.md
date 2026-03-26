@@ -6,7 +6,7 @@ Moodle Mobile, öğrencilerin en çok kullandığı arayüzdür. Ancak düzgün 
 
 Moodle Mobile uygulamasının çalışması için Web Servisleri ve REST protokolü etkinleştirilmelidir.
 
-```
+```text
 Site Administration > Advanced Features > Enable web services ✅
 Site Administration > Plugins > Web services > Manage protocols > REST protocol ✅
 Site Administration > Mobile app > Enable mobile web service ✅
@@ -33,11 +33,11 @@ sudo -u www-data php8.3 /var/www/moodle/admin/tool/mobile/launch.php \
 ```
 
 > [!NOTE]
-> Mobil uygulama ilk bağlandığında `core_webservice_get_site_info` çağrısını yapar. Bu çağrı başarısız oluyorsa 9 kez üzeri 10 site URL'si veya SSL sorunudur — tarayıcıda siteyi açarak SSL sertifikasının geçerli olduğunu doğrulayın.
+> Mobil uygulama ilk bağlandığında `core_webservice_get_site_info` çağrısını yapar. Bu çağrı başarısız oluyorsa geçersiz site URL'si veya SSL sorunudur — tarayıcıda siteyi açarak SSL sertifikasının geçerli olduğunu doğrulayın.
 
 ## 11.3 Mobil Uygulama Görünümü Özelleştirme
 
-```
+```text
 Site Administration > Mobile app > Mobile appearance
 ```
 
@@ -52,7 +52,7 @@ Site Administration > Mobile app > Mobile appearance
 
 Moodle varsayılan olarak bildirimleri **Moodle HQ'nun Airnotifier sunucuları** üzerinden gönderir. Bu ücretsizdir ancak özelleştirilemez.
 
-```
+```text
 Site Administration > Messaging > Airnotifier settings
 ```
 

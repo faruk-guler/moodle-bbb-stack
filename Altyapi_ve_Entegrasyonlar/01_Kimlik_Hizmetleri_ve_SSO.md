@@ -29,6 +29,7 @@ Moodle yerleşik bir LDAP eklentisi ile gelir.
    * `First name` → `givenName`
    * `Surname` → `sn`
    * `Email address` → `mail`
+
 ### 1.2 Greenlight v3 ve LDAP (ÖNEMLİ MİMARİ DEĞİŞİKLİĞİ)
 
 Greenlight v2 sürümünde doğrudan `.env` dosyasına LDAP parametreleri (`LDAP_SERVER`, `LDAP_UID` vb.) girilerek Active Directory bağlantısı yapılabiliyordu. Ancak **Greenlight v3 ile birlikte doğrudan LDAP desteği kaldırılmıştır**.
@@ -36,6 +37,7 @@ Greenlight v2 sürümünde doğrudan `.env` dosyasına LDAP parametreleri (`LDAP
 Bunun yerine, endüstri standardı olan **OpenID Connect (OIDC)** kullanımına geçilmiştir. Greenlight v3 ortamında kullanıcılarınızı LDAP üzerinden doğrulamak için araya bir **Kimlik Sağlayıcı (IdP - Örn: Keycloak)** kurmanız zorunludur.
 
 **Yeni Mimari Akışı:**
+
 1. Kullanıcı Greenlight v3'e girer ve "Giriş Yap" butonuna basar.
 2. Greenlight, kullanıcıyı Keycloak (IdP) sunucusuna yönlendirir.
 3. Keycloak, arka planda (User Federation özelliği ile) Active Directory (LDAP) sunucunuzla konuşarak kullanıcının bilgilerini doğrular.
@@ -48,13 +50,14 @@ Bu kurulumun detayları, BBB dokümantasyonundaki ilgili "Greenlight v3 İleri D
 Greenlight v3'ün aksine **PILOS**, Active Directory (LDAP) bağlantısını **doğrudan** desteklemeye devam eder. Araya Keycloak gibi ek bir IdP kurma zorunluluğu yoktur.
 
 PILOS `.env` dosyasında şu parametrelerle LDAP aktif edilebilir:
-- `LDAP_ENABLED=true`
-- `LDAP_HOST=dc01.sirket.local`
-- `LDAP_BASE_DN="OU=Kullanicilar,DC=sirket,DC=local"`
-- `LDAP_USER_ATTRIBUTE=sAMAccountName`
+
+* `LDAP_ENABLED=true`
+* `LDAP_HOST=dc01.sirket.local`
+* `LDAP_BASE_DN="OU=Kullanicilar,DC=sirket,DC=local"`
+* `LDAP_USER_ATTRIBUTE=sAMAccountName`
 
 > [!NOTE]
-> PILOS, nitelik eşleştirme (mapping) ve Regex tabanlı rol atamaları için `.env` dışında gelişmiş bir **JSON yapılandırma** sistemi kullanır. Bu sayede LDAP gruplarını doğrudan PILOS rollerine otomatik olarak bağlayabilirsiniz. Detaylar için: [PILOS Bölüm 13 - JSON Mapping](file:///c:/Users/SISTEM/Downloads/Antigravity/BigBlueButton/13_PILOS_Alternatif_Arayuz.md#L230)
+> PILOS, nitelik eşleştirme (mapping) ve Regex tabanlı rol atamaları için `.env` dışında gelişmiş bir **JSON yapılandırma** sistemi kullanır. Bu sayede LDAP gruplarını doğrudan PILOS rollerine otomatik olarak bağlayabilirsiniz. Detaylar için: [PILOS Bölüm 13 - JSON Mapping](../BigBlueButton/13_PILOS_Alternatif_Arayuz.md#8-ileri-duzey-kimlik-dogrulama-ve-json-mapping)
 
 ---
 
@@ -75,32 +78,6 @@ sudo chown -R root:www-data saml2
 sudo -u www-data php8.3 /var/www/moodle/admin/cli/upgrade.php --non-interactive
 ```
 
-### 2.2 Entra ID (Azure AD) Tarafı — Enterprise Application
-
-1. Microsoft Entra admin paneline girin: `Enterprise applications > New application > Create your own application` (Non-gallery). Adını "Moodle LMS" yapın.
-2. **Single sign-on** seçeneğini **SAML** olarak belirleyin.
-3. Microsoft size üç bilgi verecektir: bunlara `IdP (Identity Provider) Metadata` denir. Özellikle `App Federation Metadata Url` linki sizin için en önemlisidir.
-
-### 2.3 Moodle Tarafında SAML Yapılandırması
-
-1. `Site Administration > Plugins > Authentication > SAML2` sayfasına gidin.
-2. **IdP metadata XML OR URL:** Entra ID'den kopyaladığınız Metadata URL'sini (<kbd>https://login.microsoftonline.com/.../federationmetadata.xml</kbd>) buraya yapıştırıp kaydedin.
-3. Moodle'ın sizin Entra ID uygulamanıza vereceği bir yanıt URL'si olacaktır. `Site Administration > Plugins > Authentication > SAML2 > Settings` sayfasının en altında bulunan kendi `SP Metadata XML` bağlantınızı kopyalayın.
-4. Bu bilgiyi (SP Metadata) Entra ID tarafına geri dönüp `Upload metadata file` sekmesinden yükleyin. Moodle ve Microsoft artık şifreli bir güven tazeledi.
-
-### 2.4 SAML Veri Eşleştirme (Data Mapping)
-
-Entra ID, Moodle'a varsayılan olarak `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname` gibi çok uzun isimli nitelikler gönderir.
-
-Moodle SAML2 ayarlarında **Data mapping** sekmesinde şu eşleştirmeleri yapın:
-- **First name:** `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname`
-- **Surname:** `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`
-- **Email:** `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` (VEYA `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn`)
-
-### 2.5 PILOS ve SAML2
-
-PILOS da tıpkı LDAP gibi SAML2 protokolünü aracı bir IdP olmadan doğrudan destekler. Microsoft Entra ID veya Keycloak ile doğrudan `SAML_` ön ekli çevresel değişkenler (Env variables) kullanılarak eşleştirilebilir. Bu özellik, Greenlight v3'ün OIDC zorunluluğuna göre büyük bir esneklik avantajıdır.
-
 ---
 
 Artık Moodle giriş sayfasında kullanıcı adı/şifre yerine "Microsoft ile Giriş Yap" şeklinde kurumsal bir buton olacaktır.
@@ -114,9 +91,9 @@ Peki kullanıcılarınız Moodle'a Microsoft Single Sign-On ile giriş yaptıkta
 **HAYIR.**
 
 Moodle ile BBB arasındaki LTI tabanlı `mod_bigbluebuttonbn` eklentisi arka planda kendi güven tünelini (`Secret Key` ve `Checksum`) kullanır.
-Öğrenci Moodle'da "Toplantıya Katıl" butonuna bastığında, Moodle API aracılığıyla BBB sunucusuna şu komutu gönderir:
+Öğrenci Moodle'da "Toplantıya Katıl" butonuna basar, Moodle API aracılığıyla BBB sunucusuna şu komutu gönderir:
 
-> *"Benim sistemimde Ahmet Yılmaz (ahmet@sirket.com) adında, Viewer (Öğrenci) rolüne sahip ve doğrulanmış bir kullanıcım var. Bu kullanıcı senin internalID'si XYZ-123 olan odana girmek istiyor. Bu kullanıcıyı kabul et."*
+> *"Benim sistemimde Ahmet Yılmaz (<ahmet@sirket.com>) adında, Viewer (Öğrenci) rolüne sahip ve doğrulanmış bir kullanıcım var. Bu kullanıcı senin internalID'si XYZ-123 olan odana girmek istiyor. Bu kullanıcıyı kabul et."*
 
 Bu sayede, kullanıcılar Moodle'a başarılı şekilde kimlik doğruladıklarında (ister LDAP, ister SAML, ister yerel hesap olsun), BBB'ye bir daha şifre girmeden, otomatik olarak isimleri ve rolleriyle (Öğretmenler moderatör olarak) bağlanırlar.
 

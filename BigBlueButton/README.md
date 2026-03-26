@@ -1,10 +1,8 @@
 # BigBlueButton v3.x ve Ötesi — Kurumsal BT Altyapı ve Mimarisi 2026
 
-<img src="./img/bbb_main.png" alt="BBB Preview" width="50%">
+![BBB Preview](./img/bbb_main.png)
 
-```console
-## Yazar: faruk-guler 2026
-```
+> **Yazar:** faruk-guler 2026
 
 ## BigBlueButton (BBB) Nedir?
 
@@ -34,5 +32,3 @@ Bu repo altındaki dosyalar, BigBlueButton v3.0 mimarisi için tam bir SysAdmin 
 3. Öğrencilerin kameralarının açılmaması, sesin zayıf gelmesi gibi teknik darboğazları teşhis etmek isteyen ağ ve sistem yöneticileri.
 
 > **💡 İpucu:** `bbb-conf` komutu bu sistemin kalbidir. Sistemin durumunu hızlıca analiz etmek için her zaman `sudo bbb-conf --status` veya `sudo bbb-conf --check` komutlarını kullanabilirsiniz.
-
----

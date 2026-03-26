@@ -1,7 +1,7 @@
 # 🎓 Moodle & BigBlueButton — Kurumsal BT Altyapı ve Mimarisi 2026
 
 <p align="center">
-  <img src="./bbb-moodle-logo.png" alt="BBB + Moodle" width="40%">
+  <img src="./img/bbb-moodle-logo.png" alt="BBB + Moodle" width="40%">
 </p>
 
 <p align="center">
@@ -29,40 +29,12 @@ Bu depo, **Moodle** (LMS) ve **BigBlueButton** (Video Konferans) platformların�
 ```text
 ├── Moodle/                    ← 15 bölüm — Moodle 5.1.x SysAdmin Rehberi
 │   ├── 01_Moodle_Mimari_ve_Bilesenler.md
-│   ├── 02_Sunucu_Kurulumu_ve_Gereksinimler.md
-│   ├── 03_Veritabani_ve_Caching_Redis.md
-│   ├── 04_Dosya_Yonetimi_ve_Moodledata.md
-│   ├── 05_Cron_ve_Ad_hoc_Task_Yonetimi.md
-│   ├── 06_Guvenlik_ve_Hardening.md
-│   ├── 07_Yedekleme_ve_Surum_Yukseltme.md
-│   ├── 08_Tema_ve_Arayuz_Ozellestirme.md
-│   ├── 09_Eklenti_ve_LTI_Entegrasyonlari.md
-│   ├── 10_Performans_ve_Olceklendirme.md
-│   ├── 11_Mobil_Uygulama_ve_Bildirimler.md
-│   ├── 12_Analitik_ve_Raporlama.md
-│   ├── 13_BigBlueButton_Moodle_Entegrasyonu.md
-│   ├── 14_Sik_Karsilasilan_Hatalar_Debug.md
-│   ├── 15_Moodle_4_5_ve_Gelecek_Vizyonu.md
+│   ├── ...
 │   └── README.md
 │
 ├── BigBlueButton/             ← 17 bölüm — BBB v3.0.x SysAdmin Rehberi
 │   ├── 01_BBB_Mimari_ve_Bilesenler.md
-│   ├── 02_Sistem_Gereksinimleri_ve_Kurulum.md
-│   ├── 03_Ag_Guvenlik_Duvari_ve_TURN_STUN.md
-│   ├── 04_Yonetim_ve_CLI_Araclari.md
-│   ├── 05_Toplanti_ve_Oda_Ayarlari.md
-│   ├── 06_Kayit_Yonetimi_Recording.md
-│   ├── 07_Ileri_Duzey_Ozellestirme_ve_Branding.md
-│   ├── 08_Performans_ve_Olceklendirme_Scalelite.md
-│   ├── 09_Izleme_Loglama_ve_SorunGiderme.md
-│   ├── 10_Guncelleme_Yedekleme_ve_Guvenlik.md
-│   ├── 11_API_Kullanimi_ve_Dis_Entegrasyonlar.md
-│   ├── 12_Greenlight_v3_Ileri_Yonetim.md
-│   ├── 13_PILOS_Alternatif_Arayuz.md
-│   ├── 14_SIP_Trunk_ve_Dial_In_Entegrasyonu.md
-│   ├── 15_BBB_3_0_Yenilikleri_ve_Kullanimi.md
-│   ├── 16_Sik_Karsilasilan_Hatalar_ve_Kriz_Yonetimi.md
-│   ├── 17_Ogrenme_Analitikleri_ve_Derin_Arayuz_Ayarlari.md
+│   ├── ...
 │   └── README.md
 │
 ├── Altyapi_ve_Entegrasyonlar/ ← 4 bölüm — Ortak Entegrasyon Rehberi

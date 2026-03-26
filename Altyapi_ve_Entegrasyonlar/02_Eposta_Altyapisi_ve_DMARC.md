@@ -1,6 +1,7 @@
 # Bölüm 2: E-posta Altyapısı, SMTP ve Gönderilebilirlik (SPF, DKIM, DMARC)
 
 Moodle gibi devasa LMS sistemleri veya BigBlueButton'ın Greenlight arayüzü yüz binlerce e-posta üretir:
+
 - Yeni hesap aktivasyon linkleri
 - "Şifremi unuttum" sıfırlama mailleri
 - Sınav notu açıklandı, foruma yeni mesaj eklendi bildirimleri
@@ -14,14 +15,12 @@ Sistemlerinizin kendi içlerindeki `sendmail/postfix` yerine **kurumsal ve güve
 
 ### 1.1 Moodle SMTP Ayarları
 
-```
-Site Administration > Server > Email > Outgoing mail configuration
-```
+`Site Administration > Server > Email > Outgoing mail configuration`
 
-* **SMTP hosts:** `smtp.office365.com:587` veya `smtp-relay.gmail.com:587`
-* **SMTP security:** TLS (Her zaman TLS kullanın; port 465 ise SSL kullanın).
-* **SMTP username / password:** Gönderim yetkisi olan servis e-posta hesabı (örnek: no-reply@sirket.com).
-* **No-reply address:** `no-reply@sirket.com` (Bu adres, öğrencilerin Moodle'dan gelen e-postalara cevap yazmasını engellemek için "Kimden" alanında görünür).
+- **SMTP hosts:** `smtp.office365.com:587` veya `smtp-relay.gmail.com:587`
+- **SMTP security:** TLS (Her zaman TLS kullanın; port 465 ise SSL kullanın).
+- **SMTP username / password:** Gönderim yetkisi olan servis e-posta hesabı (örnek: no-reply@sirket.com).
+- **No-reply address:** `no-reply@sirket.com` (Bu adres, öğrencilerin Moodle'dan gelen e-postalara cevap yazmasını engellemek için "Kimden" alanında görünür).
 
 > [!WARNING]
 > Eğer Azure/O365 kullanıyorsanız, Microsoft "SMTP AUTH" özelliğini güvenlik nedeniyle varsayılan olarak `Disabled` (Kapalı) tutar. Exchange admin panelinden `no-reply@sirket.com` hesabı için SMTP AUTH yetkisini "Enabled" olarak aktif etmelisiniz.
@@ -57,18 +56,24 @@ Moodle'ın veya BBB'nin e-postaları başarıyla gönderdiğini varsayalım. Ned
 Bunu kanıtlamak için kurumunuzun DNS (Alan Adı Yöneticisi - Cloudflare vb.) yönetici paneline üç sihirli kayıt eklemelisiniz:
 
 ### 2.1 SPF (Sender Policy Framework)
+
 Alan adınız (`sirket.com`) adına hangi IP'lerin posta göndermeye yetkili olduğunu açıklar.
+
 - **Tip:** TXT
 - **Ad (Host):** `@` (veya sirket.com)
 - **Değer:** `v=spf1 include:spf.protection.outlook.com ip4:203.0.113.1 -all`
 *(Burada Exchange (Outlook) sunucularına ve `203.0.113.1` IP adresli Moodle sunucumuzun e-posta atmasına izin verdik, diğer her yeri (`-all`) reddettik).*
 
 ### 2.2 DKIM (DomainKeys Identified Mail)
+
 Moodle her e-posta gönderdiğinde içine benzersiz kriptografik bir mühür (imza) basar. Alıcı sunucu, bu mührü doğrulamak için DNS'inize bir Açık Anahtar (Public Key) sorar. Eşleşirse "Bu e-posta yolda hiç değiştirilmemiş" der.
+
 - **Nasıl Eklenir?** Bu anahtarı Moodle sunucusu değil, e-postayı üzerinden gönderdiğiniz servis sağlar. (Örneğin Office 365 Exchange panelinden DKIM oluşturup size iki adet CNAME kaydı verir. Bunları DNS'inize girmeniz gerekir).
 
 ### 2.3 DMARC (Domain-based Message Authentication)
+
 En katı bekçidir. SPF ve DKIM taramasından geçemeyen yasadışı mühürlere (örneğin adınıza mail atan sahte sunuculara) ne olacağını, e-posta sağlayıcılara söyler.
+
 - **Tip:** TXT
 - **Ad:** `_dmarc`
 - **Değer:** `v=DMARC1; p=quarantine; rua=mailto:it-rapor@sirket.com;`
@@ -81,13 +86,17 @@ En katı bekçidir. SPF ve DKIM taramasından geçemeyen yasadışı mühürlere
 Moodle'ın standart e-posta işleyişi PHP'nin çalışma döngüsüne ve Cron'a bağlıdır. Eğer hoca 5000 öğrencilik bir derse duyuru atarsa, o Cron döngüsü kilitlenebilir.
 
 ### 3.1 Moodle Asynchronous Mail Handling
+
 Moodle'ın e-postaları topluca, sayfa yüklemesini dondurmadan arka planda göndermesini sağlamak için:
+
 1. Pano'da `Site Administration > Advanced Features > Enable scheduled tasks` (Ad-hoc görevler) aktif olsun.
 2. Formda duyuru atarken hoca "Send immediately" (Anında gönder) kutusunu bile işaretlese Moodle bu eylemi veritabanındaki (DB) `Message Spool` sırasına yazar.
 3. Cron, dakikada bir çalışıp bu sıradan (Örn: her seferinde 100 mail) parçalarla mailleri SMTP üzerinden dağıtır.
 
 ### 3.2 SMTP Connection Limitleri (Bilinmesi Gereken Hata)
+
 Çoğu kurumsal şirket e-postası (Office 365, Google) **dakikada n adet** veya **günde m adet** (ör: günde maks 10,000) e-posta göndermenize izin verir.
+
 - Eğer Moodle aynı saniyede 500 e-posta basmaya kalkarsa, Office 365 Moodle'ın IP'sini "Spammer" algılayıp "SMTP 421 - Service not available" hatası verebilir.
 - **Çözüm:** Bu gibi devasa sistemlerde Moodle bildirimleri için SendGrid, Amazon SES veya Mailgun gibi toplu mail (Transactional Email) API'lerine özel tasarlanmış servisleri kullanın. Moodle SMTP ayarlarında "SMTP Hosts" alanına `smtp.sendgrid.net` girerek limiti kırabilirsiniz.
 

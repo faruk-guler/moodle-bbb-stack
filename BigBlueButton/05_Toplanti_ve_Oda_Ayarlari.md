@@ -14,7 +14,8 @@ BigBlueButton'ın web arayüzü (React/NodeJS Frontend) ile ilgili kararlar `/et
 
 ### Örnek bbb-html5.yml Yapılandırmaları
 
-**1. Katılımcıları (Öğrencileri) Mikrofon ve Kameraları Kapalı Başlatmak**
+### 1. Katılımcıları (Öğrencileri) Mikrofon ve Kameraları Kapalı Başlatmak
+
 ```yaml
 public:
   app:
@@ -25,8 +26,10 @@ public:
     everyoneMutedOnJoin: true # Odaya her giren sessizde (muted) başlar.
 ```
 
-**2. Veri Tasarrufu Modu (Data Saving) - Kamerayı Zorla Kapatma**
+### 2. Veri Tasarrufu Modu (Data Saving) - Kamerayı Zorla Kapatma
+
 Özellikle düşük bant genişliğine sahip ülkelerdeki öğrenciler için sadece öğretmenin kamerası / sunumu gelsin isterseniz:
+
 ```yaml
 public:
   webrtc:
@@ -39,7 +42,8 @@ public:
     hideVideoForViewers: true # Sadece moderatör - öğretmenin kamerası izleyiciler tarafından görülür.
 ```
 
-**3. Uygulamanın Türkçe ile Başlaması (Tarayıcı Dilinden Bağımsız)**
+### 3. Uygulamanın Türkçe ile Başlaması (Tarayıcı Dilinden Bağımsız)
+
 ```yaml
 public:
   app:
@@ -47,6 +51,7 @@ public:
 ```
 
 Değişiklik yaptıktan sonra:
+
 ```bash
 sudo systemctl restart bbb-html5
 ```
@@ -55,19 +60,6 @@ sudo systemctl restart bbb-html5
 
 Toplantı ne kadar süre boş kalırsa kapansın? Bir odada toplantı otomatik olarak ne kadar sürede kayda alınsın? Bu gibi backend (sunucu tarafı) API parametrelerini `/etc/bigbluebutton/bigbluebutton.properties` üzerinden düzenlersiniz.
 
-**En Çok Değiştirilen Parametreler:**
-
-| Parametre | Varsayılan | Açıklama |
-| --- | --- | --- |
-| `defaultWelcomeMessage` | İngilizce metin | Boş bırakılabilir veya kendi hoşgeldin mesajınız eklenebilir. |
-| `testWelcomeMessage` | İngilizce metin | Test toplantılarına özel metin. |
-| `maxInactivityTimeoutMinutes` | 15 | Eğer herkes sessiz, kimse ekrana tıklamıyor ve konuşmuyorsa oda kaç dakika sonra kendi kendini yönetsin ve kapansın? (15 dakika) |
-| `meetingExpireWhenLastUserLeftInMinutes`| 1 | Sunucu veya öğretmen odadan çıktığında oda açık mı kalsın, toplantı "bitti" mi sayılsın? Genellikle 1 dakikadır. Eğer öğrenciler öğretmensiz kendi başlarına sohbet edememeli ise `1` bırakın veya `0` yapıp anında kapatın. |
-
-Bu dosyada değişiklik yaptıktan sonra:
-```bash
-sudo systemctl restart bbb-web
-```
 **(veya kökten çözüm: `sudo bbb-conf --restart`)**
 
 ## 5.3 Greenlight Yapılandırması (Eğer Kullanılıyorsa)
@@ -77,12 +69,14 @@ Eğer LMS (Moodle vb) kullanıyor ve Greenlight ile işiniz yoksa bu kısmı atl
 Greenlight, kendi Postgres veritabanına, kendi `.env` ayar dosyasına sahip bir docker bileşenidir.
 
 **Greenlight v3 (Yeni) Ayarları (`~/greenlight-v3/.env`)**
+
 - `BIGBLUEBUTTON_ENDPOINT`: Sizin API url'siniz.
 - `BIGBLUEBUTTON_SECRET`: Sizin API Gizli anahtarınız.
 - `SMTP_*`: Kayıt olanlara mail gitmesi ve şifre yenileme linkleri çalışması için gerekli SMTP E-posta sunucu bilginiz.
 - `ALLOW_MAIL_NOTIFICATIONS`: true (E-posta ile onayı açar).
 
 Değiştirildiğinde Greenlight konteynerini yeniden başlatmak:
+
 ```bash
 cd ~/greenlight-v3
 docker compose down && docker compose up -d

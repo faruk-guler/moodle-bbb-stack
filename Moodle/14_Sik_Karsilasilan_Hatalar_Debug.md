@@ -14,7 +14,7 @@ Moodle'da bir sorun olduğunda "Beyaz Ekran" (White Screen of Death) veya anlams
 | Systemd Cron | `journalctl -u moodle-cron` | Cron çıktıları |
 
 > [!TIP]
-> **Merkezi Log Yönetimi:** Loglarınızı tek bir panelden (Grafana/Loki) izlemek ve alarmlar kurmak için kök dizindeki [Merkezi Log Yönetimi](file:///c:/Users/SISTEM/Downloads/Antigravity/Altyapi_ve_Entegrasyonlar/03_Merkezi_Log_Yonetimi.md) rehberini inceleyin.
+> **Merkezi Log Yönetimi:** Loglarınızı tek bir panelden (Grafana/Loki) izlemek ve alarmlar kurmak için kök dizindeki [Merkezi Log Yönetimi](../Altyapi_ve_Entegrasyonlar/03_Merkezi_Log_Yonetimi.md) rehberini inceleyin.
 
 ## 14.2 Debug Modunu Açmak
 
@@ -111,7 +111,9 @@ sudo nginx -T | grep server_name
 
 # Site etkin mi?
 ls -la /etc/nginx/sites-enabled/
+```
 
+```bash
 # Nginx syntax kontrolü
 sudo nginx -t && sudo systemctl reload nginx
 ```

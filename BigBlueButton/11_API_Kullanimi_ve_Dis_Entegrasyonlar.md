@@ -38,7 +38,7 @@ BBB sunucunuzu ayağa kaldırdıktan sonra bir okula bağlamak istiyorsanız:
 1. **Moodle Entegrasyonu:**
    Moodle yöneticisi "Eklentiler" altından `mod_bigbluebuttonbn` (Moodle 4.x'te gömülü gelir) ayarlarına gider.
    - BBB URL: `https://bbb.sirket.com/bigbluebutton/` *(Sonundaki `/` ve `/bigbluebutton/` mutlaka olmalıdır)*
-   - Shared Secret: `bbb-conf --secret` çıktısındaki uzun anahtar.
+   - Shared Secret: `bbb-conf --secret` çıktıdaki uzun anahtar.
 
 2. **WordPress Entegrasyonu:**
    En popüler eklenti "BigBlueButton API" plugin'idir. Ayarlarına gidip aynı şekilde URL ve Secret Key girilir. Sayfalara veya yazılara Shortcode (örn: `[bigbluebutton meeting="test"]`) ekleyerek odaya katılım butonu çıkarılabilir.

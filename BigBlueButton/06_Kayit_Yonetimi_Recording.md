@@ -21,39 +21,49 @@ Bir toplantı sona erdiğinde (LMS tarafından sonlandırıldığında, odadan h
 Sistemin arkasında işleyen Ruby süreçlerinin (record and playback) durumunu görmek için güçlü komut satırı aracı `bbb-record`'dur.
 
 **Son dönemdeki kayıtların listesi:**
+
 ```bash
 sudo bbb-record --list
 ```
 
 **Kayıt işleyen işçi (worker) izlemek:**
+
 ```bash
 sudo bbb-record --watch
 ```
-*(Bu komut, anlık olarak hangi toplantının Archive, Process veya Publish evresinde olduğunu gösterir)*
+
+> (Bu komut, anlık olarak hangi toplantının Archive, Process veya Publish evresinde olduğunu gösterir)
 
 **Bir kaydı bilerek (manuel) yeniden işletmek (Rebuild):**
+
 ```bash
 # Sadece spesifik bir Internal Meeting ID (Örn: 91b138e6...) için
 sudo bbb-record --rebuild 91b138e6...
 ```
-*Not: Bu id'yi `--list` komutunda görebilirsiniz.*
+
+> Not: Bu id'yi `--list` komutunda görebilirsiniz.
 
 ## 6.3 Disk Kullanımı ve Eski Kayıtları Yönetme
 
 BigBlueButton, sunucu disklerinin dolmasını önlemek için bir cron servisi kullanır (genellikle /etc/cron.d/bigbluebutton). Ancak bazen sysadmin'ler eski kayıtları elle temizlemek veya yedeklemek ister.
 
 ### Yayınlanmayan (Unpublished/Raw) Kayıtları Silme
+
 Toplantı biteli onaylanmış ama API veya eğitimci tarafından "Kaydedilmeyecek" denmiş, silinmeyen ham veriler sunucuda kalabilir:
+
 ```bash
 sudo bbb-record --deleteall
 sudo bbb-record --clean
 ```
 
 ### Eski Yayınlanmış (Published) Kayıtları Silme Scripti
+
 Otomatik olarak X günden eski **tüm kayıtları** silmek sunucuyu rahatlatır. BBB'nin içindeki şu dosyanın konfigürasyonunu (gün sayısını) düzenleyebilirsiniz:
+
 ```bash
 nano /etc/cron.daily/bigbluebutton
 ```
+
 Burada eski yayınları silen `history` değişkenini örneğin `-mtime +30` (30 günden eski) şeklinde ayarlayıp çalıştırabilirsiniz.
 
 ## 6.4 MP4 Olarak Kaydetmek Mümkün mü?
@@ -61,9 +71,11 @@ Burada eski yayınları silen `history` değişkenini örneğin `-mtime +30` (30
 BigBlueButton varsayılan olarak "Presentation" (Sunum) kaydı formatı (.webm / html5 bazlı oynatıcı) verir. Eğer öğrenciler videoyu doğrudan `video.mp4` olarak indirmek isterse, "video" işleme formatı (video-playback) kurulmalıdır:
 
 **(Kurulum ve aktifleştirme):**
+
 ```bash
 sudo apt install bbb-playback-video
 ```
+
 Bu paketi kurarsanız, kayıtlar iki farklı formatta işlenir (hem sunum, hem saf MP4 benzeri video). Ancak CPU işleme süresi **2 katına** çıkar.
 
 ## 6.5 Kayıtların Ortak Depolamaya (NFS vb.) Taşınması (Ölçeklendirme Ön Bilgisi)

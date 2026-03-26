@@ -14,14 +14,15 @@ Sunucuda orijinal dosyanın yeri şuradadır:
 `/var/www/bigbluebutton-default/default.pdf`
 
 Kendi `default.pdf` dosyanızı bu konuma atıp eskisinin üzerine yazın:
+
 ```bash
 sudo cp kendi_default.pdf /var/www/bigbluebutton-default/default.pdf
 # İzinleri düzeltelim (Nginx erişimi için)
 sudo chown -R www-data:www-data /var/www/bigbluebutton-default/
 ```
 
-3. **Önemli: Apply-Config ile Kalıcı Yapmak**
-BBB her `apt upgrade` veya yeniden kurma işlemi gördüğünde bu dosya orijinal BBB reklam dosyasıyla **geri değişecektir**. Bunu engellemek için `apply-config.sh` betiği yaratmalısınız. (Bölüm 4'e atıf). 
+1. **Önemli: Apply-Config ile Kalıcı Yapmak**
+BBB her `apt upgrade` veya yeniden kurma işlemi gördüğünde bu dosya orijinal BBB reklam dosyasıyla **geri değişecektir**. Bunu engellemek için `apply-config.sh` betiği yaratmalısınız. (Bölüm 4'e atıf).
 Kendi pdf'nizi `/etc/bigbluebutton/my-default.pdf` içine koyun. Sonra `nano /etc/bigbluebutton/bbb-conf/apply-config.sh` içine şunu ekleyin:
 
 ```bash
@@ -29,6 +30,7 @@ Kendi pdf'nizi `/etc/bigbluebutton/my-default.pdf` içine koyun. Sonra `nano /et
 cp /etc/bigbluebutton/my-default.pdf /var/www/bigbluebutton-default/default.pdf
 chown www-data:www-data /var/www/bigbluebutton-default/default.pdf
 ```
+
 Ve dosyaya çalışma izni verin: `sudo chmod +x /etc/bigbluebutton/bbb-conf/apply-config.sh`
 
 ## 7.2 Logo Değiştirme ve Hoşgeldin Sayfası (Kök Dizin)
@@ -42,6 +44,7 @@ sudo nano /etc/nginx/sites-available/bigbluebutton
 ```
 
 İçinde `location / {` bloğunu bulun. Klasör yolunu değiştirebilir veya doğrudan 301 yönlendirmesi ekleyebilirsiniz:
+
 ```nginx
 location / {
    return 301 https://sirketiniz.com/;
@@ -63,6 +66,7 @@ public:
 Daha sonra `/var/www/bigbluebutton-default/` içerisine `ozel_tema.css` koyarsanız Nginx onu otomatik sunacaktır.
 
 **Örnek (ozel_tema.css):**
+
 ```css
 /* Üst menü barının rengini kurumsal lacivert (Örn: #002D62) yapmak */
 ._imports_ui_components_nav_bar__styles__navbar {
@@ -72,5 +76,6 @@ Daha sonra `/var/www/bigbluebutton-default/` içerisine `ozel_tema.css` koyarsan
 /* "Powered by BigBlueButton" yazısını gizlemek (Tavsiye edilmez ama mümkündür) */
 /* ._imports_ui_components_video_provider_video_list__styles__poweredBy { display: none !important; } */
 ```
+
 > [!NOTE]
 > React sınıflarının isimleri BBB sürümlerinde çok küçük de olsa değişebilir (hash yiyebilir). Bu yüzden CSS sınıflarını Chrome DevTools inspect (İncele) ile tespit edip `!important` kuralını kullanarak ezmelisiniz. (Varlığını koruyan sabit id/class'lar bazen değişmektedir).

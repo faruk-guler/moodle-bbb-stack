@@ -26,6 +26,7 @@ BBB kurulumu normal şartlarda sisteminde "Public IP" bulamazsa FreeSWITCH ve We
 Bu sorunu çözmenin yöntemleri:
 
 ### Yöntem 1: Dummy Interface (Sahte Ağ Arabirimi)
+
 Sunucu içine dış IP'mizmiş gibi davranacak sahte bir ağ kartı (Interface) eklemek.
 
 1. `/etc/netplan/` içindeki yapılandırma dosyanıza (ör. `00-installer-config.yaml` veya `50-cloud-init.yaml`) şunu ekleyin:
@@ -43,30 +44,38 @@ network:
         - 203.0.113.1/32 # Sizin gerçek Public (Dış) IP'niz
 ```
 
-2. Sisteme "dummy" modülünü yükleyin:
+1. Sisteme "dummy" modülünü yükleyin:
+
 ```bash
 sudo modprobe dummy
 echo "dummy" | sudo tee -a /etc/modules
 ```
 
-3. Netplan'ı uygulayın:
+1. Netplan'ı uygulayın:
+
 ```bash
 sudo netplan apply
 ```
+
 *Artık `ifconfig` yazdığınızda sistemin `dummy0` arayüzünde `203.0.113.1` (dış IP) gördüğünü anlayacak ve FreeSWITCH bu adresi anons edecektir.*
 
 ### Yöntem 2: FreeSWITCH SIP profiline Extern-IP Eklemek
+
 (Tavsiye edilen dummy'dir, ama zorunlu kalırsanız) `sip_profiles/external.xml` tarzı dosyalardaki `$${local_ip_v4}` değişkenlerini `$${external_rtp_ip}` formatında zorla belirtmek gerekir. (Bu konu `bbb-conf --setip` ile bazen ezildiği için risklidir).
 
 ## 3.3 TURN ve STUN (Coturn) Nedir? Neden Gerekir?
 
-### STUN 
-Katılımcıya "Senin internette görünen Public IP adresin bu" diyen bir ayna servisidir. 
+### STUN
+
+Katılımcıya "Senin internette görünen Public IP adresin bu" diyen bir ayna servisidir.
+
 - Eğer istemci (öğrenci/katılımcı) evinde simetrik NAT/Firewall arkasındaysa sadece STUN işe yaramaz.
 
 ### TURN (Traversal Using Relays around NAT)
+
 Katılımcının (veya sunucunun) ağ kısıtlamaları (firewall) veya asimetrik NAT yüzünden **doğrudan** UDP (16384-32768) iletişimini kuramadığı durumlarda aracı bir Tünel gibi davranır.
-- İşyeri ağından, katı kısıtlamalı otel ve okul ağlarından bağlanan kullanıcılar TURN sunucusu üzerinden medyayı (443 portundan şifreli olarak) tüneller. 
+
+- İşyeri ağından, katı kısıtlamalı otel ve okul ağlarından bağlanan kullanıcılar TURN sunucusu üzerinden medyayı (443 portundan şifreli olarak) tüneller.
 - Bu sayede 1020 (Medya Bağlantısı Kurulamadı) hataları engellenir.
 
 ### Coturn Kurulumu (BBB'den Ayrı Sunucu Önerilir!)
@@ -74,26 +83,33 @@ Katılımcının (veya sunucunun) ağ kısıtlamaları (firewall) veya asimetrik
 > [!TIP]
 > BBB'yi kurduğunuz sunucuya aynı zamanda TURN kurabilirsiniz, fakat yoğunluk arttığında ağ darboğazı olabilir. Tavsiye edilen, `turn.sirket.com` gibi ucuz bir sanal makine (Örn. 2 CPU, 4 GB RAM ubuntu) yaratıp sadece Coturn kurmaktır.
 
-**Ayrı Sunucuda Ubuntu 22.04'e Coturn Kurulumu:**
+**Ayrı Sunucuda Ubuntu 22.04'e Coturn Kurulumu (Port 443/TCP Tavsiyesi):**
 
-1. Sunucuyu hazırlayın ve portlarını açın (TCP 443, UDP/TCP 3478, vs). FQDN tanımlayın: `turn.sirket.com`.
-2. BBB reposundaki install scriptini kullanarak kurun:
+1. Sunucuyu hazırlayın. Kurumsal firewall'ları (Deep Packet Inspection olmayanları) baypas etmek için Coturn'ü standart **443/TCP** portunda dinleyecek şekilde yapılandırın.
+2. `bbb-install.sh` kullanarak kurulum yaparken portu belirtin:
+
 ```bash
-wget -qO- https://raw.githubusercontent.com/bigbluebutton/bbb-install/refs/heads/v3.0.x-release/bbb-install.sh | bash -s -- -c turn.sirket.com -e admin@sirket.com
+# Not: -p parametresi ile Coturn portunu 443 olarak zorlayabilirsiniz
+wget -qO- https://raw.githubusercontent.com/bigbluebutton/bbb-install/refs/heads/v3.0.x-release/bbb-install.sh | bash -s -- \
+  -c turn.sirket.com:443 -e admin@sirket.com
 ```
+
+> [!IMPORTANT]
+> TURN sunucusunda 443/TCP kullanacaksanız, o sunucuda Nginx veya başka bir web sunucusunun 443 portunu **işgal etmediğinden** emin olun.
 
 **BBB Sunucunuzu TURN'e Bağlamak:**
 
-1. `turn.sirket.com` daki *Shared Secret* keyi öğrenin (veya `/etc/turnserver.conf` dosyasından bakın).
-2. BBB sunucunuzda şu komutu çalıştırarak TURN adresinizi kaydedin:
+1. `turn.sirket.com` daki *Shared Secret* keyi öğrenin: `grep "static-auth-secret" /etc/turnserver.conf`.
+2. BBB sunucunuzda şu komutu çalıştırarak TURN adresinizi kaydedin (Port 443 belirtilmelidir):
 
 ```bash
-sudo bbb-conf --setturn turn.sirket.com turn_sunucusundaki_gizli_anahtar
+sudo bbb-conf --setturn turn.sirket.com:443 turn_gizli_anahtar
 ```
 
-3. `sudo bbb-conf --check` yazarak `turn.sirket.com` ile düzgün iletişim kurulduğunu kontrol edin.
+1. `sudo bbb-conf --check` yazarak `turn.sirket.com` ile düzgün iletişim kurulduğunu kontrol edin.
 
 ## 3.4 Çıplak IP Konusu ve IPv6
+
 BigBlueButton kurulumlarında her zaman domain (FQDN) kullanılmalıdır. IP adresi ile SSL sertifikasını geçersiz kılacak şekilde (self-signed) kurabilirsiniz ancak tarayıcılar (Chrome/Firefox vb) "Kameralara ve Mikrofona erişim" iznini güvenli olmayan (HTTP veya geçersiz HTTPS) sitelerde vermeyecektir.
 Bazı operatörlerde IPv6 ile `bbb-web` arasında çökmeler olabilir. Sorun yaşarsanız IPv6'yı sunucu bazında devre dışı bırakmayı deneyebilirsiniz:
 

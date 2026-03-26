@@ -2,7 +2,7 @@
 
 BigBlueButton sadece bir video konferans ekranı değildir; aynı zamanda akademik performansı ölçen bir eğitim aracıdır. Bu bölümde, sistem yöneticilerinin BigBlueButton'ın en derin kullanıcı arayüzü ayarlarına (Frontend JSON) nasıl müdahale edecekleri ve "Learning Dashboard" sistemini nasıl yönetecekleri anlatılmaktadır.
 
-## 16.1 Öğrenme Analitikleri (Learning Dashboard) Nedir?
+## 17.1 Öğrenme Analitikleri (Learning Dashboard) Nedir?
 
 Learning Dashboard, moderatörlerin (öğretmenlerin) ders sırasında veya ders bittikten sonra öğrencilerin:
 
@@ -26,7 +26,7 @@ public:
 > [!TIP]
 > **Veritabanı Temizliği:** Öğrenci istatistikleri doğrudan MongoDB üzerindeki `learning-dashboard` koleksiyonlarına (tablolarına) yazılır. Veri saklama (KVKK) gereksinimi duymuyorsanız bu istatistik raporlarını MongoDB'den belli periyotlarla silecek cron job'lar yazabilirsiniz.
 
-## 16.2 Tarayıcı Dil Dosyalarına (JSON) Derin Müdahale
+## 17.2 Tarayıcı Dil Dosyalarına (JSON) Derin Müdahale
 
 Arayüzdeki standart metinleri kurumunuza göre değiştirebilirsiniz. Örneğin arayüzde yazan "Kullanıcı" kelimesini "Öğrenci", veya "Sohbet" yazısını "Canlı Mesajlaşma" yapmak isteyebilirsiniz. Frontend tamamen compile edilmiş (build/paketlenmiş) bir React uygulaması olsa da, çeviri dosyaları sunucuda çıplak JSON formatında durur.
 
@@ -46,7 +46,7 @@ Arayüzdeki standart metinleri kurumunuza göre değiştirebilirsiniz. Örneğin
 > [!WARNING]
 > **Güncelleme Riski:** Sunucu paketlerini güncellediğinizde (`apt upgrade`) bu dosya orijinal BigBlueButton `tr.json` dosyasıyla **ezilir**. Kalıcı çevirileriniz için `apply-config.sh` (Bkz. Bölüm 4) içine bir cp (kopyalama) komutu ekleyerek her restart veya güncelleme sonrasında kendi yedeklediğiniz `custom_tr.json` dosyasının dizine yerleşmesini garanti altına almalısınız.
 
-## 16.3 Yüzlerce Kamerayı Aynı Anda Yönetmek (Pagination ve Layout)
+## 17.3 Yüzlerce Kamerayı Aynı Anda Yönetmek (Pagination ve Layout)
 
 BigBlueButton, bir odaya aynı anda 50, 100 kişinin kamerasını soktuğunuzda HTML5 tarayıcısının sekmesinin çökmesini engellemek için "Sayfalandırılmış Kameralar" (Pagination) özelliği sunar.
 
@@ -69,7 +69,7 @@ public:
 > [!NOTE]
 > BBB 3.0 öncesi sürümlerde kamera eşik değerleri `kurento:` YAML anahtarı altında tanımlanıyordu. v3.0 ile bu ayarlar `media:` ve `cameraPagination:` altına taşınmıştır. Eski ayar dosyalarınızı güncellemeyi unutmayın.
 
-## 16.4 Paylaşılan Notlar (Etherpad) Formatlama ve İhracı
+## 17.4 Paylaşılan Notlar (Etherpad) Formatlama ve İhracı
 
 BBB içinde sağ tarafta açılan "Paylaşılan Notlar", arka planda NodeJS tabanlı bir "Etherpad" sunucusudur. Öğrencilerin ortak yazdığı dökümanların, ders bitiminde nasıl dışa aktarıldığı API aracılığıyla yönetilebilir.
 

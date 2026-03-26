@@ -12,11 +12,21 @@ Eğitim dünyası değişiyor, Moodle da bu değişime sürüklenerek değil **l
 | Moodle 5.2 | Nis 2026 | Planlanan: H5P iyileştirmeleri, performans güncellemeleri |
 | **Moodle 5.3 (LTS)** | **Eki 2026** | **Planlanan LTS sürümü — kurumsal geçiş için hazırlanın** |
 
-## 15.2 Yapay Zeka (AI) Entegrasyonu
+## 15.2 Moodle 5.3 LTS Hazırlık Kontrol Listesi
+
+Ekim 2026'da çıkacak olan Moodle 5.3, önümüzdeki 3-5 yılın standart kurumsal sürümü olacaktır. Sorunsuz geçiş için şu adımları tamamladığınızdan emin olun:
+
+- [ ] **PHP 8.4 Geçişi:** Moodle 5.3 ile birlikte PHP 8.4 en kararlı ve performanslı deneyimi sunacaktır. Mevcut PHP 8.1/8.2 sürümlerini emekli edin.
+- [ ] **Veritabanı Güncelleme:** PostgreSQL 16 veya MySQL 8.4 (LTS) sürümlerine geçiş yapın. Eski `lower_case_table_names` veya `collations` ayarlarını Moodle standartlarına getirin.
+- [ ] **`/public` Mimari Dönüşümü:** Web sunucunuzu (Nginx/Apache), kök dizin `/public` olacak şekilde yeniden yapılandırın. Gelecekteki güvenlik güncellemeleri bu mimariyi baz alacaktır.
+- [ ] **SSO Modernizasyonu:** Greenlight v3 geçişi ile birlikte LDAP yerine OIDC (Keycloak) mimarisine geçişinizi tamamlayın.
+- [ ] **UI/UX Sadeleştirme:** Eski "Legacy" temaları terk edin; Moodle 5.x'in modern AI-destekli arayüzüne uyumlu özel temalar geliştirin.
+
+## 15.3 Yapay Zeka (AI) Entegrasyonu
 
 Moodle 4.4 ile birlikte çekirdek seviyesinde AI altyapısı devreye girdi.
 
-```
+```text
 Site Administration > AI > AI providers
 ```
 
@@ -26,6 +36,7 @@ Site Administration > AI > AI providers
 ```
 
 **Kullanım Senaryoları:**
+
 - **Eğitmenler için:** Kurs içeriği taslağı oluşturma, soru üretimi
 - **Öğrenciler için:** Ödev özeti, kavram açıklaması
 - **Yöneticiler için:** Rapor yorumlama yardımı
@@ -33,7 +44,7 @@ Site Administration > AI > AI providers
 > [!NOTE]
 > AI özelliklerini açmak isteğe bağlıdır. Veri gizliliği politikanıza göre OpenAI gibi harici servislere veri gönderildiğini kullanıcılara bildirmeniz yasal açıdan önemlidir.
 
-## 15.3 Modern PHP ve Performans Artışı
+## 15.4 Modern PHP ve Performans Artışı
 
 ```bash
 # Moodle 4.5+ için PHP 8.3 zorunludur
@@ -47,7 +58,7 @@ opcache.jit_buffer_size = 64M
 
 PHP 8.3 JIT ile birlikte CPU-yoğun Moodle işlemleri (Analytics modelleri, büyük raporlar) %20-40 daha hızlı çalışabilmektedir.
 
-## 15.4 Moodle LMS — Docker ile Kurulum (Geliştirme/Test Ortamı)
+## 15.5 Moodle LMS — Docker ile Kurulum (Geliştirme/Test Ortamı)
 
 > [!WARNING]
 > Aşağıdaki Docker Compose sadece geliştirme ve test ortamları içindir. **Canlı (production) Moodle kurulumu için önerilmez.**
@@ -98,7 +109,7 @@ docker compose up -d
 # Moodle'a http://localhost:8080 adresinden erişin
 ```
 
-## 15.5 Moodle Roadmap — 2026 ve Ötesi
+## 15.6 Moodle Roadmap — 2026 ve Ötesi
 
 - **Stateless Moodle:** Kubernetes üzerinde yatay ölçeklenen Moodle küme mimarileri standart hale geliyor.
 - **Micro-learning:** Daha kısa, odaklı öğrenme modülleri için optimizasyon.

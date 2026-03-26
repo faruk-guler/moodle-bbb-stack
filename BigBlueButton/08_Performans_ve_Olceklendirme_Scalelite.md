@@ -32,7 +32,7 @@ Scalelite kurulumu için klasik BBB mimarisinden farklı bir topoloji gerekir:
 
 ## 8.3 Yeni Ölçeklendirme Yaklaşımı (Greenlight v3 Load Balancer)
 
-Eğer LMS (Moodle vb) kullanmıyor, sadece Greenlight kullanıyorsanız, Greenlight v3 (Son sürümü) kendi içinden Load Balancing (Yük Dengeleme) yapabilir. Admin panelinden `bbb01`, `bbb02` sunucularının Secret Key'lerini arayüze girersiniz. Greenlight en boş olana otomatik atar. Scalelite kurma zorunluluğunu ortadan kaldıran pratik bir çözümdür, ancak Merkezi Kayıt Yönetimi (NFS) gibi özellikleri için ek bir script/web sunucu konfigürasyonu istemeye devam eder.
+Если LMS (Moodle vb) kullanmıyor, sadece Greenlight kullanıyorsanız, Greenlight v3 (Son sürümü) kendi içinden Load Balancing (Yük Dengeleme) yapabilir. Admin panelinden `bbb01`, `bbb02` sunucularının Secret Key'lerini arayüze girersiniz. Greenlight en boş olana otomatik atar. Scalelite kurma zorunluluğunu ortadan kaldıran pratik bir çözümdür, ancak Merkezi Kayıt Yönetimi (NFS) gibi özellikleri için ek bir script/web sunucu konfigürasyonu istemeye devam eder.
 
 ## 8.4 Performans Sıkılaştırması (Kamera Limitleri)
 

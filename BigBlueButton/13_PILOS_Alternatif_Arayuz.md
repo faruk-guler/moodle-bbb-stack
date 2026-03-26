@@ -2,13 +2,13 @@
 
 BigBlueButton'ı doğrudan kullanıcılarla buluşturmak için resmi arayüz **Greenlight** v3'tür. Ancak, özellikle üniversiteler ve akademik ortamlar için Almanya'daki TH Mittelhessen Uygulamalı Bilimler Üniversitesi (THM) tarafından geliştirilmiş, güçlü bir açık kaynak alternatif bulunmaktadır: **PILOS** (Platform for Interactive Live-Online Seminars).
 
-## 1. PILOS Nedir ve Neden Geliştirildi?
+## 13.1 PILOS Nedir ve Neden Geliştirildi?
 
 PILOS, Covid-19 pandemisi sırasında öğrencilerin, öğretmenlerin ve personelin deneyimlerine dayanarak, dijital sınıflar ve grup çalışmaları için modern ve esnek bir video konferans yönetim sistemi ihtiyacıyla ortaya çıkmıştır.
 
 Orijinal Greenlight projesinin çözemediği veya o günün şartlarında (Greenlight v2 zamanında) eklenmesi zor olan spesifik akademik gereksinimleri karşılamak amacıyla "Greenlight'a benzer bir arayüz ama daha esnek" mottosuyla geliştirilmiştir.
 
-## 2. Greenlight ile PILOS Karşılaştırması
+## 13.2 Greenlight ile PILOS Karşılaştırması
 
 İkisi de kullanıcıların sisteme giriş yapmasını, oda açmasını ve ders başlatmasını sağlar. Temel farklar şunlardır:
 
@@ -21,7 +21,7 @@ Orijinal Greenlight projesinin çözemediği veya o günün şartlarında (Green
 
 ---
 
-## 3. Sistem Gereksinimleri
+## 13.3 Sistem Gereksinimleri
 
 | Gereksinim | Açıklama |
 | :--- | :--- |
@@ -33,20 +33,20 @@ Orijinal Greenlight projesinin çözemediği veya o günün şartlarında (Green
 
 ---
 
-## 4. Kurulum (Docker Compose ile)
+## 13.4 Kurulum (Docker Compose ile)
 
 PILOS, Docker imajı olarak dağıtılır. Varsayılan ayarlarla kurulur, sonra arayüz veya config dosyaları üzerinden özelleştirilir.
 
 > [!IMPORTANT]
 > PILOS, **Semantic Versioning** kullanır. Production ortamında her zaman sabit bir majör sürüm etiketi kullanın (ör: `v4`). `latest` etiketini production'da kullanmayın — majör sürümler arası otomatik yükseltme desteklenmez.
 
-### 4.1 Proje Dizinini Oluşturma
+### 13.4.1 Proje Dizinini Oluşturma
 
 ```bash
 mkdir pilos && cd pilos
 ```
 
-### 4.2 Docker İmajını Tanımlama ve Dosyaları Çıkarma
+### 13.4.2 Docker İmajını Tanımlama ve Dosyaları Çıkarma
 
 ```bash
 # Kullanılacak sürümü belirleyin (ör: v4)
@@ -58,7 +58,7 @@ docker run --rm $IMAGE cat ./docker-compose.yml > docker-compose.yml
 sed -i "s|CONTAINER_IMAGE=.*|CONTAINER_IMAGE=$IMAGE|g" .env
 ```
 
-### 4.3 Temel Yapılandırma (.env Dosyası)
+### 13.4.3 Temel Yapılandırma (.env Dosyası)
 
 #### APP_KEY (Zorunlu — Şifreleme Anahtarı)
 
@@ -89,7 +89,7 @@ openssl rand -hex 24
 
 Çıktıyı `.env` dosyasındaki `DB_PASSWORD` satırına yapıştırın.
 
-### 4.4 PostgreSQL Kullanımı (Önerilen)
+### 13.4.4 PostgreSQL Kullanımı (Önerilen)
 
 PILOS varsayılan olarak MariaDB ile gelir. PostgreSQL kullanmak isterseniz `docker-compose.yml` dosyasındaki `db` servisini şu şekilde değiştirin:
 
@@ -120,14 +120,14 @@ DB_PORT=5432
 
 ---
 
-## 5. Reverse Proxy Yapılandırması
+## 13.5 Reverse Proxy Yapılandırması
 
 PILOS kendi Nginx web sunucusunu içerir ancak konteynerin portunun doğrudan internete açılmaması önerilir. Önüne bir reverse proxy koymalısınız.
 
 > [!WARNING]
 > PILOS varsayılan olarak `127.0.0.1:5000` portunda dinler. Bu portu dışa açmayın; reverse proxy üzerinden yönlendirin.
 
-### 5.1 Nginx (Önerilen)
+### 13.5.1 Nginx (Önerilen)
 
 ```nginx
 location / {
@@ -141,7 +141,7 @@ location / {
 }
 ```
 
-### 5.2 Nginx ile Rate Limiting (İsteğe Bağlı)
+### 13.5.2 Nginx ile Rate Limiting (İsteğe Bağlı)
 
 ```nginx
 limit_req_zone $binary_remote_addr zone=api:10m rate=5r/s;
@@ -161,7 +161,7 @@ location / {
 }
 ```
 
-### 5.3 Trusted Proxies (Güvenilir Proxy Ayarı)
+### 13.5.3 Trusted Proxies (Güvenilir Proxy Ayarı)
 
 Reverse proxy aynı sunucuda çalışıyorsa (varsayılan durumda Docker bridge ağı üzerinden gelir):
 
@@ -174,9 +174,9 @@ TRUSTED_PROXIES=*
 
 ---
 
-## 6. Başlatma ve İlk Yapılandırma
+## 13.6 Başlatma ve İlk Yapılandırma
 
-### 6.1 Uygulamayı Başlatma
+### 13.6.1 Uygulamayı Başlatma
 
 ```bash
 docker compose up -d
@@ -185,7 +185,7 @@ docker compose up -d
 docker compose logs -f
 ```
 
-### 6.2 Superuser (Yönetici) Hesabı Oluşturma
+### 13.6.2 Superuser (Yönetici) Hesabı Oluşturma
 
 ```bash
 docker compose exec app pilos-cli users:create:superuser
@@ -196,9 +196,9 @@ docker compose exec app pilos-cli users:create:superuser
 
 ---
 
-## 7. Güvenlik Önerileri
+## 13.7 Güvenlik Önerileri
 
-### 7.1 HSTS (HTTP Strict Transport Security)
+### 13.7.1 HSTS (HTTP Strict Transport Security)
 
 Reverse proxy seviyesinde HSTS başlığını etkinleştirin:
 
@@ -208,7 +208,7 @@ Reverse proxy seviyesinde HSTS başlığını etkinleştirin:
 add_header Strict-Transport-Security "max-age=31536000" always;
 ```
 
-### 7.2 Loglama
+### 13.7.2 Loglama
 
 Varsayılan olarak tüm hatalar Docker loglarına (`stderr`) yazılır. Kalıcı dosya tabanlı loglama için:
 
@@ -228,11 +228,11 @@ x-docker-pilos-common: &pilos-common
 
 ---
 
-## 8. İleri Düzey Kimlik Doğrulama ve JSON Mapping
+## 13.8 İleri Düzey Kimlik Doğrulama ve JSON Mapping
 
 PILOS, LDAP veya SAML2 üzerinden gelen kullanıcıların rollerini ve niteliklerini (attributes) yönetmek için gelişmiş bir JSON tabanlı eşleştirme sistemi kullanır. Bu özellik, Greenlight v3'ün sahip olmadığı, doğrudan "Regex" (düzenli ifade) ile rol atama esnekliği sunar.
 
-### 8.1 Öznitelik ve Rol Eşleştirme (`auth.json`)
+### 13.8.1 Öznitelik ve Rol Eşleştirme (`auth.json`)
 
 PILOS kurulum dizininde veya yapılandırma panelinde tanımlanan bu JSON yapısı, dış kaynaklı kullanıcı bilgilerini PILOS içindeki rollere bağlar:
 
@@ -275,15 +275,15 @@ PILOS kurulum dizininde veya yapılandırma panelinde tanımlanan bu JSON yapıs
 }
 ```
 
-### 8.2 Bu Yapı Ne Sağlar?
+### 13.8.2 Bu Yapı Ne Sağlar?
 
-1.  **Regex ile Dinamik Rol Atama:** Örneğin, sadece `@its.university.org` uzantılı e-postası olan kişileri veya LDAP'ta `admin` grubunda olanları otomatik olarak `superuser` (moderatör yetkili yönetici) yapabilirsiniz.
-2.  **Grup Bazlı Yetkilendirme:** LDAP üzerindeki `memberof` niteliğini okuyarak, üniversite hiyerarşisini doğrudan PILOS rollerine yansıtabilirsiniz.
-3.  **Esnek Eşleştirme:** LDAP'taki `cn` niteliğini PILOS'un `external_id` alanına bağlayarak benzersiz kimlik yönetimini garantilersiniz.
+1. **Regex ile Dinamik Rol Atama:** Örneğin, sadece `@its.university.org` uzantılı e-postası olan kişileri veya LDAP'ta `admin` grubunda olanları otomatik olarak `superuser` (moderatör yetkili yönetici) yapabilirsiniz.
+2. **Grup Bazlı Yetkilendirme:** LDAP üzerindeki `memberof` niteliğini okuyarak, üniversite hiyerarşisini doğrudan PILOS rollerine yansıtabilirsiniz.
+3. **Esnek Eşleştirme:** LDAP'taki `cn` niteliğini PILOS'un `external_id` alanına bağlayarak benzersiz kimlik yönetimini garantilersiniz.
 
 ---
 
-## 9. BBB Sunucusu Bağlantısı
+## 13.9 BBB Sunucusu Bağlantısı
 
 PILOS kurulumu tamamlandıktan sonra yönetici panelinden (Superuser ile giriş yaparak) BBB sunucunuzu eklemeniz gerekir:
 
@@ -296,7 +296,7 @@ PILOS kurulumu tamamlandıktan sonra yönetici panelinden (Superuser ile giriş 
 
 ---
 
-## 9. Greenlight vs PILOS — Hangisini Seçmeli?
+## 13.10 Greenlight vs PILOS — Hangisini Seçmeli?
 
 | Kriter | Greenlight v3.5 | PILOS v4.x |
 | :--- | :--- | :--- |

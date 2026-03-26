@@ -2,17 +2,15 @@
 
 Moodle ve BigBlueButton arasındaki bağ, modern bir uzaktan eğitim sisteminin en kritik köprüsüdür. Bu bölüm, yalnızca Moodle tarafındaki yapılandırmayı ele alır; BBB kurulumu için bu repodaki `BigBlueButton` dizinini inceleyin.
 
-## 13.1 BBB Eklentisinin Kurulumu
+## 13.1 BBB Eklentisinin Durumu
 
-Moodle 4.1+ ve 5.x sürümlerinde `mod_bigbluebuttonbn` eklentisi artık **Moodle çekirdeğine dahildir** — ayrıca kurmanıza gerek yoktur. Kontrol etmek için:
+Moodle 4.1+ ve 5.x sürümlerinde `mod_bigbluebuttonbn` eklentisi artık **Moodle çekirdeğine (core) dâhildir**. Normal şartlarda ayrıca kurmanıza gerek yoktur.
 
-```
-Site Administration > Plugins > Activity Modules > BigBlueButton
-```
-
-Eğer yoksa veya eski bir sürüm ise:
+> [!NOTE]
+> Eğer eklentinin Moodle çekirdeğindeki sürümünden daha yeni bir sürümünü (Beta veya yeni özellikler içeren) manuel olarak kurmak isterseniz aşağıdaki adımları izleyebilirsiniz. Ancak kurumsal üretim (production) sistemlerinde her zaman **Core** sürümde kalınması önerilir.
 
 ```bash
+# Sadece manuel güncelleme gerektiğinde (İsteğe bağlı):
 cd /var/www/moodle/mod
 sudo git clone https://github.com/blindsidenetworks/moodle-mod_bigbluebuttonbn.git bigbluebuttonbn
 sudo chown -R root:www-data /var/www/moodle/mod/bigbluebuttonbn
@@ -23,9 +21,7 @@ sudo -u www-data php8.3 /var/www/moodle/admin/cli/upgrade.php --non-interactive
 
 BBB sunucunuzun API adresini ve gizli anahtarını (Secret) aşağıya girin:
 
-```
-Site Administration > Plugins > Activity Modules > BigBlueButton (mod_bigbluebuttonbn)
-```
+`Site Administration > Plugins > Activity Modules > BigBlueButton (mod_bigbluebuttonbn)`
 
 | Alan | Değer | Komut (BBB Sunucusunda) |
 | :--- | :--- | :--- |
