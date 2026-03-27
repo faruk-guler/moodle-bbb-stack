@@ -5,7 +5,7 @@ Bu klasör, bir BBB veya Moodle sunucusuna **Self-Signed (kendi imzalı) SSL ser
 > [!NOTE]
 > Bu klasördeki `.key`, `.crt` ve `.pem` dosyaları **örnek/dummy** içeriklidir — gerçek bir sunucuya veya alan adına ait değildir. Yalnızca dokümantasyon ve test amaçlı referans olarak eklenmiştir.
 
-## Sertifika Oluşturma Adımları (`create-cert.txt` içeriğinden)
+## Sertifika Oluşturma Adımları
 
 ```bash
 # 1. Self-signed sertifika oluşturun
