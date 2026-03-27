@@ -301,7 +301,7 @@ docker compose exec scalelite-api bundle exec rake \
 
 # guler-room02 için:
 docker compose exec scalelite-api bundle exec rake \
-  "servers:add[https://guler-room02.guler.com/bigbluebutton/api,Vgtrtwgrwt3wedfg]"
+  "servers:add[https://guler-room02.guler.com/bigbluebutton/api,Vgtrtwgrwfdg42667t3wedfg]"
 ```
 
 > [!WARNING]
