@@ -1,4 +1,4 @@
-# 🎓 Moodle & BigBlueButton — Kurumsal BT Altyapı ve Mimarisi 2026
+# 🎓 Moodle & BigBlueButton — Kurumsal BT Altyapı ve Mimari 2026
 
 <p align="center">
   <img src="./img/bbb-moodle-logo.png" alt="BBB + Moodle" width="40%">
