@@ -16,7 +16,7 @@ Scalelite, BigBlueButton'ın yaratıcıları (Blindside Networks) tarafından ge
 - İkinci bir öğretmen başka bir ders açtığında, Scalelite onu `bbb07`'ye atar.
 
 > [!CAUTION]
-> Scalelite veya herhangi bir BBB Load Balancer, "tek bir odadaki 500 kişiyi 5 farklı sunucuya bölerek" taşımaz. Ölçeklendirme işlemi ODA/TOPLANTI (Meeting) bazındadır. Yani 10 odanız varsa her birini 1 sunucuya dağıtır. Tek odada devasa bir yayın (Örn: 2000 kişi) yapmak isterseniz webiner (Youtube Live/Rtmp) entegrasyonu gerekir.
+> Scalelite veya herhangi bir BBB Load Balancer, "tek bir odadaki 500 kişiyi 5 farklı sunucuya bölerek" taşımaz. Ölçeklendirme işlemi ODA/TOPLANTI (Meeting) bazındadır. Yani 10 odanız varsa her birini 1 sunucuya dağıtır. Tek odada devasa bir yayın (Örn: 2000 kişi) yapmak isterseniz webiner (Youtube Live/Rtmp) entegrasyonu gerekir. (2026 yılı itibariyle)
 
 ## 8.2 Scalelite Mimarisi ve Gereksinimleri
 
